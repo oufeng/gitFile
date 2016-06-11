@@ -1,0 +1,164 @@
+https://software.intel.com/zh-cn/blogs/2013/10/09/javascript-this
+javascript用法整理
+
+大方向：Javascript裡的this看的是究竟是誰調用該函式，而不是看該函式被定義在哪個物件內，
+		這個大原則抓到了，基本上就已經可以探知this的奧秘了。
+
+
+
+第一种情况：this指向於調用該函式之物件（有调用者）
+
+	公式
+	物件.函式(); //函式內的this指向該物件
+
+	范例
+	var  obj = {
+		x: 20,
+		f: function(){ console.log(this.x); }
+	};
+
+	obj.f(); //由於調用f函式時，點前面物件為obj，故f內的this指向obj，則輸出為20。
+
+	obj.obj = {	
+		x: 30,
+		f: function(){ console.log(this.x); }
+	}
+
+	obj.innerobj.f(); //由於調用f函式時，點前面物件為obj.innerobj，故f內的this指向obj.innerobj，則輸出為30。
+	
+	
+第二种情况：this指向全域物件(瀏覽器：window物件、node.js：GLOBAL物件)(无调用者)
+
+	公式
+	函式(); //函式內的this指向全域物件
+	
+	范例
+	var x = 10;
+	var f = function(){
+		console.log(this.x);
+	};
+
+	f(); //由於調用f函式時，前方並未有[物件.]的形式，故f內的this指向全域物件，則輸出全域變數的x(10)。
+	
+	
+	前兩種情況常見誤導範例:
+
+		例一：物件之成員函式內有函式
+		var x = 10;
+		var obj = {
+			x: 20,
+			f: function(){
+				console.log(this.x);
+				var foo = function(){ console.log(this.x); }
+				foo(); // (2)10
+			}
+		};
+
+		obj.f();  // (1)20
+		
+		结果：非 20，20； 而是 20，10
+		解释：因為(1)obj.f()調用時，f前面物件為obj，故f內的this指向obj。但因為調用f內的(2)foo函式時是用foo()，
+			  調用的前方並未有物件，故foo內的this指向全域物件，所以輸出會是全域變數的x的值。
+		
+		改造：
+		var x = 10;
+		var obj = {
+			x: 20,
+			f: function(){
+				console.log(this.x);
+				var that = this;	//使用that保留在這個函式內的this
+				var foo = function(){ console.log(that.x); }
+				foo(); // (2)20
+			}
+		};
+
+		obj.f();  // (1)20
+		
+		
+		例二：借用函式
+		var x = 10;
+		var obj = {
+			x: 20,
+			f: function(){ console.log(this.x); }
+		};
+
+		obj.f(); // (1)20
+
+		var fOut = obj.f;
+		fOut(); //(2)10
+
+		var obj2 = {
+			x: 30,
+			f: obj.f
+		}
+
+		obj2.f(); // (3)30
+		
+		结果：20 10 30
+		解释：範例中三次調用之函式的this所指向的物件為何，不知道各位能不能看得出來。雖然用的是同一個函式，但是
+			  因為調用的不同，故this所指向的物件就不同。(1)obj.f()的f所指向的是obj，這比較沒有問題，輸出的會是
+			  20；而(2)fOut()裡的this，則是因為調用時前方無物件，則this所指的是全域物件，輸出的會是10；最後(3)
+			  obj2.f()則是obj2去呼叫f，故f內的this指向的是obj2，輸出的會是30；
+		
+3.this指向利用call或apply所指派給this的物件
+	公式
+	(A物件.)函式.call(B物件,參數1,參數2,參數3, ......); //函式的this指向B物件(若B物件為null，則指向全域物件)
+	(A物件.)函式.apply(B物件,[參數1,參數2,參數3, ......]); //函式的this指向B物件(若B物件為null，則指向全域物件)
+	区别：
+	call的调用方式传递参数的时候用的是普通的方式传递参数；apply的调用方式传递参数的时候用的是对象的方式传递参数。
+	
+	范例：
+	var obj = {
+		x: 20;
+		f: function(){ console.log(this.x); }
+	};
+
+	var obj2 = {
+		x: 30;
+	};
+
+	obj1.f.call(obj2); //利用call指派f的this為指向obj2，故輸出為30
+	
+4.this指向new所產生之新物件
+
+	若將函式當作建構式(constructor)來用，則內部的this則指向於new所產生之新物件。
+
+	公式
+	new 建構式(); //建構式內之this指向new所產生之新物件
+	
+	範例
+	function Monster(){
+		this.hp = 100;
+	};
+
+	var monster = new Monster(); //Monster的this指向new出來之新物件並回傳回來，new的寫法就類似於下面的寫法。
+	var monster = (function(){
+		var _new = { constructor: Monster, __proto__: Monster.prototype }; //在IE內可能不相似
+		_new.constructor(); //這也是為何說可以利用前三種情況來變化的原因，constructor呼叫時，this指向的即是_new這個物件。
+		return _new;
+	})();
+	
+5.callback函式內的this會指向於調用放入該callback的函式之this所指向之物件
+
+	$('#button').click(function(){
+		this.html("Clicked");
+	})
+	此時這個this居然會指向$(‘#button’)這個物件，感覺很自然，但實際想想會覺得很神奇。假設你寫一個function，
+	它可以吃一個function，並在裡面呼叫傳入的function，你該怎麼寫呢？
+	
+	var f = function(innerf){
+		//前面的處理
+		innerf(arg1, arg2, arg3, ......);
+		//後面的處理
+	}
+	但如果這樣寫的話，innerf裡的this根據前述規則就應該是全域物件了！那為什麼常常別人實作的callback函式可讓this
+	指向於調用放入該callback的函式之this所指向之物件呢？這表示大家實作上會遵守一個規則，會將自己的this傳給callback
+	當作它的this來用！這也是為什麼我說這個情況其實也是前三種情況的變化而已了！所以上面的code應該改成如下的形式
+	會比較好：
+	
+	var f = function(innerf){
+		//前面的處理
+		innerf.call(this, arg1, arg2, arg3, ......);
+		//或是innerf.apply(this, [arg1, arg2, arg3, ......])
+		//後面的處理
+	}

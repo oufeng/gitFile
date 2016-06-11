@@ -1,0 +1,389 @@
+语法：
+	数字：
+		javascript只有一个数字类型，它在内部被表示为64为的浮点数；但是它没有分离出整数类型，所以1和1.0的值相同。避免了短整型的溢出问题。
+		数字中也有可能有指数部门：100 === 1e2
+		NaN是一个数值，表示一个不能产生正常结果的运算结果。也包括NaN自己。可以用isNaN检测NaN: isNaN('A')  true
+		Infinity表示所有大于1.79769313486231570e+308的值，表示无穷大的值；
+		Math对象：包括一套作用于数字的方法；
+			属性		描述
+			E			返回算术常量 e，即自然对数的底数（约等于2.718）。
+			LN2			返回 2 的自然对数（约等于0.693）。
+			LN10		返回 10 的自然对数（约等于2.302）。
+			LOG2E		返回以 2 为底的 e 的对数（约等于 1.414）。
+			LOG10E		返回以 10 为底的 e 的对数（约等于0.434）。
+			PI			返回圆周率（约等于3.14159）。
+			SQRT1_2		返回返回 2 的平方根的倒数（约等于 0.707）。
+			SQRT2		返回 2 的平方根（约等于 1.414）。
+			
+			方法		描述
+			abs(x)		返回数的绝对值。
+			acos(x)		返回数的反余弦值。
+			asin(x)		返回数的反正弦值。
+			atan(x)		以介于 -PI/2 与 PI/2 弧度之间的数值来返回 x 的反正切值。
+			atan2(y,x)	返回从 x 轴到点 (x,y) 的角度（介于 -PI/2 与 PI/2 弧度之间）。
+			ceil(x)		对数进行上舍入。
+			cos(x)		返回数的余弦。
+			exp(x)		返回 e 的指数。
+			floor(x)	对数进行下舍入。
+			log(x)		返回数的自然对数（底为e）。
+			max(x,y)	返回 x 和 y 中的最高值。
+			min(x,y)	返回 x 和 y 中的最低值。
+			pow(x,y)	返回 x 的 y 次幂。
+			random()	返回 0 ~ 1 之间的随机数。
+			round(x)	把数四舍五入为最接近的整数。
+			sin(x)		返回数的正弦。
+			sqrt(x)		返回数的平方根。
+			tan(x)		返回角的正切。
+			toSource()	返回该对象的源代码。
+			valueOf()	返回 Math 对象的原始值。
+		
+		number对象的方法：
+		number.toExponential(fractionDigits)：把number转换成一个指数形式的字符串；fractionDigits控制其小数点后的数字位数；
+			document.writeln(Math.PI.toExponential(2))
+			document.writeln(Math.PI.toExponential(7))
+			document.writeln(Math.PI.toExponential(16))
+			document.writeln(Math.PI.toExponential())
+			
+			//结果
+			3.14e+0
+			3.1415927e+0
+			3.1415926535897930e+0
+			3.141592653589793e+0
+			
+		number.toFixed(fractionDigits)：把number转换成一个十进制形式的字符串；fractionDigits控制其小数点后的数字位数；
+			document.writeln(Math.PI.toFixed(2))
+			document.writeln(Math.PI.toFixed(7))
+			document.writeln(Math.PI.toFixed(16))
+			document.writeln(Math.PI.toFixed())
+			
+			//结果
+			3.14
+			3.1415927
+			3.1415926535897930
+			3
+			
+		number.toPrecision(Precision)：把number转换成一个十进制形式的字符串；Precision控制数字的精度；//带四舍五入功能
+			document.writeln(Math.PI.toPrecision(2))
+			document.writeln(Math.PI.toPrecision(7))
+			document.writeln(Math.PI.toPrecision(16))
+			document.writeln(Math.PI.toPrecision())
+			
+			//结果
+			3.1
+			3.141593
+			3.141592653589793
+			3.141592653589793
+			
+		number.toString(radix)：把number转换成一个指定进制字符串；radix控制进制基数，默认为10，必须在2-36
+			document.writeln(Math.PI.toString(2))//二进制
+			document.writeln(Math.PI.toString(8))//8进制
+			document.writeln(Math.PI.toString(16))//16进制
+			document.writeln(Math.PI.toString())//10进制
+			
+			//结果
+			11.0010010000111111011010101000100010000010110100011
+			3.1103755242102643
+			3.243f6a8885a3
+			3.141592653589793
+		
+	字符串：
+		包在一对单引号或者双引号中，可能包含0个或者多个字符。\(反斜线符号)是转义字符。Unicode是一个16位的字符集，所以javaScript中的所有字符都是16位的；
+		转义字符：  \u约定用来指定数字字符编码
+			"A" === "\u0041"   //true
+		两个包含完全相同的字符且字符顺序也相同的字符串被认为是相同的字符串。所以：
+		'c'+'a'+'t' === 'cat' //true
+		
+		String 对象属性
+		属性				描述
+		constructor			对创建该对象的函数的引用
+		length				字符串的长度
+		prototype			允许您向对象添加属性和方法
+		String 				对象方法
+		
+		方法				描述
+		anchor()			创建 HTML 锚。
+		big()				用大号字体显示字符串。
+		blink()				显示闪动字符串。
+		bold()				使用粗体显示字符串。
+		charAt()			返回在指定位置的字符。
+		charCodeAt()		返回在指定的位置的字符的 Unicode 编码。
+		concat()			连接字符串。
+		fixed()				以打字机文本显示字符串。
+		fontcolor()			使用指定的颜色来显示字符串。
+		fontsize()			使用指定的尺寸来显示字符串。
+		fromCharCode()		从字符编码创建一个字符串。
+		indexOf()			检索字符串。
+		italics()			使用斜体显示字符串。
+		lastIndexOf()		从后向前搜索字符串。
+		link()				将字符串显示为链接。
+		localeCompare()		用本地特定的顺序来比较两个字符串。
+		match()				找到一个或多个正则表达式的匹配。
+		replace()			替换与正则表达式匹配的子串。
+		search()			检索与正则表达式相匹配的值。
+		slice()				提取字符串的片断，并在新的字符串中返回被提取的部分。
+		small()				使用小字号来显示字符串。
+		split()				把字符串分割为字符串数组。
+		strike()			使用删除线来显示字符串。
+		sub()				把字符串显示为下标。
+		substr()			从起始索引号提取字符串中指定数目的字符。
+		substring()			提取字符串中两个指定的索引号之间的字符。
+		sup()				把字符串显示为上标。
+		toLocaleLowerCase()	把字符串转换为小写。
+		toLocaleUpperCase()	把字符串转换为大写。
+		toLowerCase()		把字符串转换为小写。
+		toUpperCase()		把字符串转换为大写。
+		toSource()			代表对象的源代码。
+		toString()			返回字符串。
+		valueOf()			返回某个字符串对象的原始值。
+	
+	语句：
+		定义变量的问题：
+			因为javascript有预编译的功能，所以建议变量应该被定义在函数的头部，而不是在代码中。
+		下面的值都被认定为假：
+			false
+			null
+			undefined
+			空字符串''
+			数字0
+			数字NaN
+		遍历语句：
+			//有具体的遍历长度
+			for(var i = 0;i<100;i++){
+			}
+			//直接遍历对象
+			for(myvar in obj){//
+				if(obj.hasOwnProperty(myvar)){
+					//对象本身的属性会进到这里面，原型的属性不会进到来
+				}
+			}
+		try catch语句：
+			var x=prompt("Enter a number between 0 and 10:","")
+			try{ 
+				if(x>10) 
+					throw "Err1"
+				else if(x<0)
+					throw "Err2"
+			} 
+			catch(er){
+				if(er=="Err1") 
+					alert("Error! The value is too high")
+				if(er == "Err2") 
+					alert("Error! The value is too low") 
+			}
+		typeof运算符：
+			产生的值有：
+				number,string,boolean,undefined,function和object
+
+对象	原型是重点
+	对象字面量
+		var flight {
+			airline:"Oceanic",
+			number:815,
+			departure:{
+				IATA:"STD",
+				time:"2004-09-22 14:55",
+				city:"Sydney"
+			},
+			arrival:{
+				IATA:"LAX",
+				time:"2004-09-22 10:42",
+				city:"Los Angeies"
+			}
+		};
+	
+	检索：
+		检索形式：
+			stooge["first-name"]
+			flight.departure.IATA
+		检索一个不存在的属性的值：
+			stooge["middle-name"]  							//undefined
+		||运算符可以用来填充默认值：
+			var middle = stooge["middle-name"] || "(none)";
+			var status = flight.status || "unknow";
+		&&运算符可以来避免错误：
+			flight.equipment 								//undefined
+			flight.equipment.model							//throw "TypeError";
+			flight.equipment && flight.equipment.model 		//undefined,如果flight.equipment.model throw "TypeError"的话就直接拿前面的值；
+	更新：
+		有该属性就更新；无该属性就填充；
+	
+	引用：
+		对象通过引用来传递。他们永远不会被复制。
+			var x = stooge;
+			x.nickname = 'Curly';
+			var nick = stooge.nickname;
+				//因为x和stooge是指向同一个对象的引用，所以nick为'Curly'。
+			var a = {},b = {},c={};
+				//a、b和c每个都引用一个不同的空对象；
+			a = b = c = {};
+				//a,b,和c都引用同一个空对象；
+	原型：
+		通过对象字面量创建的对象都链接到Object.prototype,他是javascript的标配对象；
+		
+		创建一个使用原对象作为其原型的新对象。
+		if(typeof Object.beget !== 'function'){
+			Object.create = function(o){
+				var F = function(){};
+				F.prototype = o;
+				return new F();
+			}
+		}
+		var another_stooge = Object.create(stooge);
+		
+		原型连接在更新时是不起作用的。当我们对某个对象做出改变时，不会触及该对象的原型；
+		
+		原型只有在检索值得时候会用到。
+		检索顺序：本身属性-->原型对象属性-->原型对象的原型的属性-->...Object.prototype;
+	反射：
+		typeof flight.number		//'number'
+		typeof flight.status		//'string'
+		typeof flight.arrival 		//'object'
+		typeof flight.manifest		//'undefined'
+		
+		请注意原型链中的任何属性都会产生值：
+		typeof flight.toString		//'function'
+		typeof flight.constructor   //'function'
+		
+		hasOwnProperty方法不会检查原型链
+		flight.hasOwnProperty('number')			//true
+		flight.hasOwnProperty('constructor')	//false
+	
+	枚举：
+		//有具体的遍历长度
+		for(var i = 0;i<100;i++){
+		}
+		//直接遍历对象
+		for(myvar in obj){//
+			if(obj.hasOwnProperty(myvar)){
+				//对象本身的属性会进到这里面，原型的属性不会进到来
+			}
+		}
+		
+	删除：
+		delete运算符可以用来删除对象的属性；它不会触及原型链中的任何对象；
+		删除对象的属性可能会让来自原型链中的属性透视出来；
+		
+		delete another_stooge.nickname;
+	
+	减少全局变量污染：
+		最小化使用全局变量的方法之一是为你的应用只创建一个唯一的全局变量；
+			var MYAPP = {};
+		该变量此时变成了你的应用的容器：
+			MYAPP.stooge = {
+				"first-name":"Joe",
+				"last-name":"Howard"
+			};
+			MYAPP.flight = {
+				airline:"Oceanic",
+				number:815,
+				departure:{
+					IATA:"SYD",
+					time:"2004-09-22",
+					city:"Sydney"
+				},
+				arrival:{
+					IATA:"LAX",
+					time:"2004-09-22",
+					city:"Los Angeles"
+				}
+			}
+			
+		其实另一种有效减少全局污染的方法，使用闭包来进行信息隐藏的方式；(因为闭包的作用域只在函数体里面)
+
+函数：
+	函数对象：
+		对象字面量产生的对象连接到Object.prototype。函数对象连接到Function.prototype(该原型对象本身连接到Object.prototype).
+		所以每个函数在创建的时候会附加这两个隐藏属性；
+		
+		另外，每个函数对象在创建的时候也随配有一个prototype属性，它的值是一个拥有constructor属性且值为该函数的对象；
+		例：
+		function DOG(name) {
+            this.name = name;
+        }
+        //DOG.prototype = { species: '犬科' };
+        var dogA = new DOG('大毛');
+        var dogB = new DOG('二毛');
+		上例中，DOG是函数对象，dogA和dogB是对象而不是所谓的函数对象；
+		DOG.prototype.constructor == DOG   		//函数对象配有一个prototype属性，该值是一个拥有constructor属性且该值为函数的对象；
+	字面量对象：
+		//创建一个名为add的变量，作相加的功能；
+		var add = function(a,b){
+			return a+b;
+		}
+		函数内可以还包含函数，且里面的函数可以访问外面的函数的变量；通过字面量创建的函数对象包含一个连到外部上下文的连接。这就是闭包；
+		所谓的闭包就是里函数可以访问外函数的变量；(很简单的闭包理解)
+	调用：
+		每个函数会接受两个附加的参数，this和arguments;
+		js中一共有4种调用模式：方法调用模式，函数调用模式，构造器调用模式和apply调用模式。
+		当实际参数arguments的个数与形式参数parameters的个数不匹配的时候，不会导致运行时错误；
+		如果实际参数值过多了，超出的参数值会被忽略；如果实际参数值过少了，缺失的值会被替换成undefined；
+		
+		方法调用模式：
+			var myObject = {
+				value:0,
+				increment:function(inc){
+					this.value += typeof inc === 'number' ? inc : 1;//不是数字的话就默认等于1
+				}
+			}
+			myObject.increment();
+			document.writeln(myObject.value);		//1
+			
+			myObject.increment(3);
+			document.writeln(myObject.value);		//3
+			
+			此时this为myObject对象；
+			方法可以使用this访问自己所属的对象，超级延迟绑定(very late binding)使得函数可以对this高度复用；
+		
+		函数调用模式：
+			var sum = add(3,4);						
+			此时this为全局对象；
+			
+			解决方案：
+				//给myObject增加一个double方法
+				myObject.double = function(){
+					var that = this;	//解决方法；
+					var helper = function(){
+						that.value = add(that.value,that.value);
+					};
+					helper();		//以函数的形式调用helper
+				};
+				
+				//以方法的形式调用double.
+				myObject.double();
+				document.writeln(myObject.value);	
+			
+		构造器调用模式：
+			//创建一个Quo的构造器函数，它构造一个带有status属性的对象；
+			var Quo = function(string){
+				this.status = string;
+			};
+			
+			//给Quo的所有实例提供一个名为get_status的公共方法
+			Quo.prototype.get_status = function(){
+				return this.status;
+			}
+			
+			//构造一个Quo实例
+			var myQuo = new Quo("confused");
+			document.writeln(myQuo.get_status());		//打印显示"confused";
+			
+			默认来说前面加了个new的话就是构造器调用模式；他们保存在以大写格式命名的变量里，如果忘记加new的话会显得比较糟糕！
+			不太推荐这样的形式调用函数；
+		
+		Apply调用模式：还有call的方式，只有参数传递的方式不一样而已；
+			Apply方法让我们构建一个参数数组传递给调用函数，而且允许我们选择this的值；
+			接收两个参数，第1个是绑定this的值，第2个就是一个参数数组；
+			
+			var array = [3,4];
+			var sum = add.Apply(null,array);	//sum值为7，默认为全局变量；
+			
+			//构造一个包含status成员的对象；
+			
+			var statusObject = {
+				status:'A-OK'
+			};
+			
+			var status = Quo.prototype.get_status.Apply(statusObject);
+			//status 值为 'A-OK'.
+			
+			

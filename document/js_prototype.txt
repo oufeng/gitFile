@@ -1,0 +1,90 @@
+http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html
+相信javascript语言的继承机制一直很折磨人！
+它没有"子类"和"父类"的概念，也没有"类"（class）和"实例"（instance）的区分，
+全靠一种很奇特的"原型链"（prototype chain）模式，来实现继承。
+
+网上很多讨论原型可是并不深入的文章，无痛无痒！
+直到阮一峰前辈从javascript诞生历史和设计者角度分析原型我才有了稍微的理解，
+下面是分析过程！
+
+1：	历史渊源：
+	1994年，网景公司（Netscape）发布了Navigator浏览器0.9版。这是历史上第一个
+	比较成熟的网络浏览器，轰动一时。但是，这个版本的浏览器只能用来浏览，不具
+	备与访问者互动的能力。
+	因此，网景公司急需一种网页脚本语言，使得浏览器可以与网页互动。工程师
+	Brendan Eich负责开发这种新语言。他觉得，没必要设计得很复杂，这种语言只要
+	能够完成一些简单操作就够了，比如判断用户有没有填写表单。
+	设计javascript的初衷是简单。可是当时便是面向对象编程最兴盛的时期。设
+	计者明显是受到了面向对象思想的影响，把js里面的数据类型都设计成了对象！既
+	然有了对象，那么到底要不要实现继承来让对象间有交互昵？当时设计者觉得js的
+	原则是简单易学，不需要太正式，所以就没有设计继承的机制。（太J8伤心了）
+
+2： 既然js一切是对象，那么怎么区分类似java的类和类的实例对象呢？
+
+	设计者就找来了替死鬼函数对象用来表示java的类：（约定使用规则）
+	var xiaoGou = new Dog("哈哈");//有new关键字就代表Gog这个对象被看成了是原型对象；里面的this指向xiaoGou
+	Gog("哈哈",12);//没有new关键字时Gog被看成了普通函数，没有对象接收函数体里面的this关键字，所以this指向window对象，
+	
+	设计者考虑到，面向对象设计思想创建对象时不是都使用new命令吗，那我也用new
+	命令好了。可是别人java、C++等面向对象语言new后面跟的都是一个类呀，你js有
+	类的概念吗？明显没有啦。 设计者也是一个不简单的人物。他认为，即使你java创
+	建对象的时候跟的是一个类名，可是你在new对象的时候也必须要调用到构造函数呀。
+	设计者Eich就设计了js new命令后面跟的不是类，而是构造函数。
+	虽然呢，js和java在创建对象的时候的语法都是new Dog();可是底层可不一样，java
+	在new的时候调用的是Dog这个类的构造函数；js在new的时候调用的只是一个函数体
+	带this的函数； 注意构造函数中的this关键字，它就代表了新创建的实例对象。
+	关于this在后面一系列的文章有介绍！
+	//原型对象：函数体带this的函数Dog
+	function Dog(name){
+　　　　this.name = name;
+　　}
+	//Dog作为原型对象使用
+	var dogA = new Dog('大毛');
+	//Dog作为函数来使用
+	Dog('大毛');//函数里面的this指向的是window对象；
+　　alert(dogA.name); // 大毛
+
+3：	填完了一个坑，又带来了另一个坑！new 运算符的缺点,为了填补这个坑而引入了随笔的主角"prototype"
+	用构造函数（原型对象）生成实例对象，有一个缺点，那就是无法共享属性和方法。
+	既然js里面都是对象，那就必须有一种机制把所有对象都联系起来呀！
+	请看例子：
+	function Dog(name, age) {
+            this.name = name;
+            this.age = age;
+            this.fun = function(){
+                console.log("大家好！我的名字是"+this.name + "我今年"+this.age+"岁了！");
+            };
+        }
+	var xiaogou = new Dog("咪咪", 12);
+	var xiaohua = new Dog("花花", 12);
+	console.log(xiaogou.fun == xiaohua.fun);//false
+	console.log(xiaogou.fun === xiaohua.fun);//false
+	明显在内存中fun函数不是在同一个地址；
+	每一个实例对象，都有自己的属性和方法的副本。这不仅无法做到数据共享，也是极大的资源浪费。
+	
+	所以Eich继续填坑，你们使用者不就是想共享数据吗？我就在原型对象中设置一个属性用来共享数据好了，直接用
+	prototype这个名称命名共享数据的属性；
+	
+	function DOG(name){
+　　　　this.name = name;
+　　}
+	
+　　var dogA = new DOG('大毛');
+　　var dogB = new DOG('二毛');
+　　DOG.prototype = { species : '犬科' };
+
+　　alert(dogA.species); // undefined 因为在创建对象的时候并没有species这个原型属性
+　　alert(dogB.species); // undefined 同上
+
+
+	DOG.prototype.species = '猫科';
+	dogA = new DOG('大毛');
+	dogB = new DOG('二毛');
+　　alert(dogA.species); // 猫科      再次创建对象的时候species这个原型属性已经有值
+　　alert(dogB.species); // 猫科	  再次创建对象的时候species这个原型属性已经有值
+
+	//dogA.constructor === DOG.prototype.constructor //True
+
+	暂且认定通过子类不能修改原型对象的prototype的值；
+	
+	
