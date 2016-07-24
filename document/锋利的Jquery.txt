@@ -1,0 +1,561 @@
+第一章：认识JQuery
+	1：解决Jquery和其他库的冲突  //推荐第一种方法
+		其一：
+		JQuery.noConflict();				//将变量$的控制权过渡给其他库；
+		Jquery(function($){
+			$("p").click(function(){
+				alert($(this).text());
+			})
+		})
+		$("pp").style.display = 'none';		//使用其他库；
+		
+		其二：
+		JQuery.noConflict();				//将变量$的控制权过渡给其他库；
+		(function($){
+			$(function(){
+				$("p").click(function(){
+					alert($(this).text());
+				})
+			})
+		})
+		
+	2: 前端开发工具的选择
+		webstorm：最好的前端IDE
+		Sublime Text:轻量；
+		
+		
+第二章：JQuery选择器
+	1：JQuery的优势
+		完善的处理机制：
+			即使使用JQuery获取网页不存在的元素也不会报错；
+			$("#tt").css("color","red");    //不需要判断$("#tt")是否存在；
+			
+			注意：因为$("#tt")获取的永远是对象，即使网页上没有元素；
+			      所以检查网页上元素是否存在时要用：
+				  if($("#tt").length > 0){
+					//do someting
+				  }
+				  
+	2：选择器的种类：
+		1：基本选择器：
+			$("div").click();
+            $("*").click();
+            $("span,#two").click();
+		2：层次选择器
+			$("span #two").click();     //span后代中id为two的所有元素；
+            $("span").find("#two");
+            $("span>#two").click();     //span后代中id为two的直接子元素；
+            $("span").next()            //所选元素之后的第一个元素
+            $("span").nextAll()         //所选元素之后的所有元素
+            $("span").prev()            //所选元素之前的第一个元素
+            $("span").prevAll()         //所选元素之前的所有元素
+		3：过滤选择器
+			1：基本过滤选择器		$("div").filter(":first")	//过滤
+				$("div:first").click();     //第一个元素
+				$("div:last").click();      //最后一个元素；
+				$("div:not(.one)").click(); //选择class不为one的<div>的元素
+				$("div:even").click();      //选择索引值为偶数的<div>的元素
+				$("div:odd").click();       //选择索引值为奇数的<div>的元素
+				$("div:eq(3)").click();     //选择索引值等于3的<div>的元素
+				$("div:gt(3)").click();     //选择索引值大于3的<div>的元素
+				$("div:lt(3)").click();     //选择索引值小于3的<div>的元素        
+				$(":header").click();       //选择当前页面所有的标题元素
+				$(":animated").click();     //选择正在执行动画的元素的背景色
+				$(":focus").click();        //选择当前获取焦点的元素
+			2：内容过滤选择器
+				$("div:contains(di)").click();        //选择文本含有“di”的div元素
+				$("div:empty").click();               //选择不包含子元素(包括文本元素)的div元素
+				$("div:has('.mini')").click();        //选择类名为mini的div元素
+				$("div:parent").click();              //选择含有子元素的div元素
+			3：可见性过滤选择器
+				$("div:visible").click();             //选择可见的div元素
+				$("div:hidden").click();              //选择不可见的div元素
+			4：属性过滤选择器
+				$('div[title^="en"]').click()		  //title以en开头的div元素
+				$('div[title*="en"]').click()		  //title包含en的div元素
+			5：子元素过滤选择器		$("div").find(":first")		//后代
+				$("div.one :nth-child(2)").click()      //选择每个class为one的div父元素下的第2个子元素
+				$("div.one :first-child").click()       //选择每个class为one的div父元素下的第1个子元素
+				$("div.one :last-child").click()        //选择每个class为one的div父元素下的最后一个子元素
+				$("div.one :onty-child").click()        //如果只有一个就匹配，不只一个就不匹配
+			6：表单对象属性过滤选择器
+				$("#form1 :enabled").click();           //id为“form1”表单中所有可用的元素
+				$("#form2 :disabled").click();          //id为“form2”表单中所有不可用的元素
+				$("input :checked").click();            //所有被选中的<input>元素
+				$("select option :select").click();     //选取所有被选中的选项元素
+		4：表单选择器
+			$(":input")选取所有<input>,<textarea>,<select>,<button>元素
+			$(":text")选取所有的单行文本框
+			$(":password")选取所有的密码框
+			$(":radion")选取所有的单选框
+			$(":checkbox")选取所有的复选框
+			$(":submit")选取所有的提交按钮
+			$(":image")选取所有的图像按钮
+			$(":reset")选取所有的重置按钮
+			$(":button")选取所有的按钮
+			$(":file")选取所有的上传域
+			$(":hiddeen")选取所有的不可见元素
+	3：关于选择器的注意事项
+		1:选择器中包含有",","#","(",")"或"]"等特殊字符要用到转义字符
+			<div id="id#b"></div>
+			<div id="id[1]"></div>
+			
+			错误的方式：
+				$("#id#b")
+				$("#id[1]")
+			正确的方式：
+				$("#id\\#b")
+				$("#id\\[1\\]")
+		2:选择器的空格问题,尤其区分后代选择器和过滤选择器
+			<div class="test" style="display: none">ee</div>
+			<div class="test" style="display: none">ff</div>
+			
+			var $t_a = $('.test :hiddeen');		//带空格的
+			选取class为'test'的元素里面的隐藏元素,在$('.test')的子代选取
+			
+			var $t_b = $('.test:hiddeen');		//不带空格的
+			选取class为'test'的元素中隐藏的元素,在$('.test')的本身选取
+			
+第三章：JQuery的DOM操作
+	1：插入节点的方法
+		目标对象在前，操作对象在后：
+			append()			向每个匹配的元素内部追加内容；
+			prepend()			向每个匹配的元素内部前置内容；
+			after()				向每个匹配的元素之后插入内容；
+			before()			向每个匹配的元素内部追加内容；
+		目标对象在后，操作对象在前：
+			appendTo()			向每个匹配的元素内部追加内容；
+			prependTo()			向每个匹配的元素内部前置内容；
+			insertAfter()		向每个匹配的元素之后插入内容；
+			insertBefore()		向每个匹配的元素内部追加内容；
+			
+	2: 删除节点
+		1: remove()
+			当某个节点用remove()方法删除后，返回值是一个指向已被删除的节点的引用；删除后还可以利用该引用还原节点，不过绑定的事件会被清空；
+			var $li = $("ul li:eq(1)").remove();	//获取第二个<li>元素节点后，将它从网页中删除
+			$li.appendTo("ul");						//把删除的元素重新添加到<ul>元素里，事件需要重新绑定
+			
+		2：detach()
+			与remove方法的区别在于该方法删除元素时不会清空绑定事件；
+			var $li = $("ul li:eq(1)").detach();	//获取第二个<li>元素节点后，将它从网页中删除
+			$li.appendTo("ul");						//把删除的元素重新添加到<ul>元素里
+			
+		3:empty()
+			清空该对象里面的元素；不可还原；
+	
+	3：复制节点
+		1: clone()			只克隆节点，不克隆绑定事件；
+			$("ul li").click(function(){
+				$(this).clone().appendTo("ul");
+			})
+		2: clone(true)		克隆节点也克隆绑定事件；
+			$("ul li").click(function(){
+				$(this).clone(true).appendTo("ul");
+			})
+	
+	4:替换节点
+		1：目标对象在前的方法
+		$("p").replaceWith("<strong>你不喜欢的是？</strong>");
+		
+		2：目标对象在后的方法
+		$("<strong>你不喜欢的是？</strong>").replaceAll("p");
+	
+	5:包裹节点
+		1：wrap()
+			$("strong").wrap("<b></b>");	用<b>标签把<strong>元素包裹起来(每个匹配的元素都包起来)
+			效果：
+			<b><strong title="哈哈哈哈">你喜欢的水果是？？</strong></b>
+			<b><strong title="哈哈哈哈">你喜欢的水果是？？</strong></b>
+		2: wrapAll()
+			$("strong").wrap("<b></b>");	用<b>标签把<strong>元素包裹起来,只用一个元素包起来
+			效果：
+			<b>
+				<strong title="哈哈哈哈">你喜欢的水果是？？</strong>
+				<strong title="哈哈哈哈">你喜欢的水果是？？</strong>
+			</b>
+		3: wrapInner()
+			内包：
+			$("strong").wrap("<b></b>");	用<b>标签把<strong>元素的子内容包裹起来；
+			<strong title="哈哈哈哈"><b>你喜欢的水果是？？</b></strong>
+	6：属性操作
+		1：设置属性		一次性为同一个元素设置多个属性
+			$("p").attr({"title":"your title","name":"jf_ou"});
+		2：删除属性
+			$("p").removeAttr("title");
+	
+	7: 切换样式
+		$("p").toggleClass("another");		//重复切换类名"another"
+	
+	8: CSS-DOM操作
+		1:	height()	width()
+			$("p").height(100);				//设置<p>元素的高度值为100px
+			$("p").width(100);				//设置<p>元素的宽度值为100px
+			
+			height()和width() 				//获取的高度值则是元素在页面中的实际高度，与样式的设置无关，且不带单位
+		
+		2：offset()方法	  position()方法   scrollTop和scrollLeft方法
+			1：offset()方法(相对于视窗)
+				获取元素在当前视窗的相对偏移(元素的左上方)，返回的对象包含两个属性；top和left
+				var offset = $("p").offset();	//获取<p>元素的offset()
+				var left = offset.left;			//获取左偏移
+				var top = offset.left;			//获取左偏移
+			2：position方法(相对于最近一个属性为relative或者absolute的祖父节点)
+				获取元素相对于最近的一个position样式属性设置为relative或者absolute的祖父节点的相对偏移；
+				var positon = $("p").position();	//获取position
+				var left = position.left;			//获取左偏移
+				var top = position.top;				//获取上偏移
+			3：scrollTop和scrollLeft方法(获取元素的滚动条距顶端的距离和距左侧的距离)
+				var $p = $("p");
+				var scrollTop = $p.scrollTop();		//获取元素的滚动条距顶端的距离
+				var scrollLeft = $p.scrollLeft();	//获取元素的滚动条距左端的距离
+				
+				$("textarea").scrollTop(300);		//元素的垂直滚动条滚动到指定的位置
+				$("textarea").scrollLeft(300);		//元素的横向滚动条滚动到指定的位置
+				
+				例如设置页面的滚动条滚动到某个页面：
+					静态效果：
+					$(document).scrollLeft(100);
+					$(document).scrollTop(200)
+					
+					动态效果：
+					$("body,html").animate({ "scrollTop":100,"scrollLeft":1200});
+					$("body,html").animate({ "scrollTop":100,"scrollLeft":1200});
+					
+第四章：JQuery的事件和动画
+		1：合成事件
+			hover()方法：
+			$(function () {
+                $("#panel h5.head").hover(function () {
+                    $(this).next().show();
+                }),function () {
+                    $(this).next().hide();
+                }
+            })
+			toggle()方法
+			$(function () {
+                $("#panel h5.head").toggle(function () {
+                    $(this).next().show();
+                }),function () {
+                    $(this).next().hide();
+                }
+            })
+			
+		2:	事件冒泡
+			触发子元素的事件会导致祖先元素相对应的事件也会被触发
+			引发的问题：会导致父元素和祖先元素的相对应事件也被触发
+			
+			解决方案：停止事件冒泡，传入事件对象参数event.stopPropagation()
+			$("#content").bind("click",function (event) {   //event事件对象
+                var txt = $("#msg").html()+"<p>外层div元素被单击。</p>";
+                $("#msg").html(txt);
+                event.stopPropagation();        //停止事件冒泡
+            })
+			
+		3：阻止默认行为	例如：单击超链接后会跳转，单击“提交”按钮后表单会提交，有时需要阻止元素的默认行为
+			event.preventDefault();
+			
+			可以用return false的方式来替代；
+			
+		4：事件捕获		从外层到内层进行捕获
+			jquery没有支持，需要javascript的原生支持
+			
+			$("body").click(function (event) {
+                var $this = $(event.target);		//获取触发事件的对象元素
+                if($this.attr("id") == "test"){		//如果是刚才的元素就执行事件
+                    alert("成功");
+                }
+            })
+		
+		5：事件对象的属性
+			1: event.type
+				获取到事件的类型
+				$("a").click(function (event) {
+					alert(event.type);  //获取事件类型
+					return false;       //阻止链接跳转
+				})
+				
+				//输出"click"
+			2: event.preventDefault()方法
+				阻止默认的事件行为
+			3：event.stopPropagation()方法
+				阻止事件冒泡
+			4：event.target
+				获取到触发事件的元素
+			5：event.relatedTarget
+				对于 mouseover 事件来说，该属性是鼠标指针移到目标节点上时所离开的那个节点。
+				对于 mouseout 事件来说，该属性是离开目标时，鼠标指针进入的节点。
+			6：event.pageX 和 event.pageY  				注意：是光标，而非点击的对象
+				获取到光标相对于页面的x光标和y坐标。	注意：是光标，而非点击的对象
+				如果页面上有滚动条，则还要加上滚动条的宽度和高度
+				$("a").click(function () {
+					//获取鼠标当前相对于页面的坐标
+					alert("Current mouse position:"+event.pageX + "," + event.pageY);
+					return false;
+				})
+			7：event.while	作用是在鼠标单击事件中获取到鼠标的左中右键
+				$("#test").mousedown(function (e) {
+					alert(e.which);
+				})
+				$("#test").keyup(function (e) {
+					alert(e.which);
+				})
+		6：移除事件
+			$(function () {
+                $("#test").bind("click",myFun = function () {
+                    $("#test").append("<p>我的绑定1<p/>");
+                }).bind("click",myFunc2 = function () {
+                    $("#test").append("<p>我的绑定1<p/>");
+                })
+            })
+			
+			只去除其中的一个绑定事件：
+			$("#delTwo").click(function () {
+                $("#btn").unbind("click",myFun);
+            })
+			
+		6：one()方法
+			只触发一次；
+			当处理函数触发一次后，立即删除；
+		
+		7：触发事件传递参数		第一个参数是要触发的事件类型，第二个参数是要传递给事件处理函数的附加数据；
+			$("#btn").bind("myClick",function (event,message1,message) {
+                $("#test").append("<p>"+message+message1+"</p>");
+            })
+			
+		8：是否执行浏览器的默认操作
+			trigger();triggerHander();
+			例如：
+			$("input").trigger("focus");		//<input>元素真的会获取焦点
+			
+			$("input").triggerHander("focus");	//<input>元素不会获取焦点
+			
+		9：添加事件命名空间，便于管理
+			$(function () {
+                $("div").bind("click.plugin",function () {
+                    $("body").append("<p>click事件</p>");
+                })
+                $("div").bind("mouseover.plugin",function () {
+                    $("body").append("<p>mouseover事件</p>");
+                })
+                $("div").bind("dbclick",function () {
+                    $("body").append("<p>dbclick事件</p>");
+                })
+                $("button").click(function () {
+                    $("div").unbind(".plugin");
+                })
+            })
+			
+			//执行
+			$("button").click(function () {
+				$("div").trigger("click!");     //注意click后面的感叹号(代表不包含命名空间的click方法)
+			})
+			$("button").click(function () {
+				$("div").trigger("click");      //两者都触发
+			})
+			
+		10：动画
+			hide(1000)
+			show(1000)
+			fadeIn(1000) //透明度
+			fadeOut(1000) //透明度
+			slideUp(1000) //往上收缩
+			fadeDown(1000) //往下展示
+			
+			1：	自定义动画
+				animate(params,speed,callback)
+				
+				//首先设定元素的长宽高和position=relative
+				$(function(){
+					$("#panel").click(function(){
+						$(this).animate({left:"500px"},3000)
+					})
+				})
+				//效果：使元素在3秒内，向右移动500像素。（只有一次的效果）
+			
+			2：累加累减动画(确保对象的position=relative)
+				$(function(){
+					$("#panel").click(function(){
+						$(this).animate({left:"+=500px"},3000)
+					})
+				})
+				
+			3：多重动画
+				1: 同时执行
+					$("#panel").click(function(){
+						$(this).animate({left:"500px",height:"300px"},3000)
+					})
+				2：先后顺序执行
+					$("#panel").click(function(){
+						$(this).animate({left:"500px"},3000).animate({height:"300px"},5000);
+					})
+			4：动画回调函数
+				$("#panel").click(function(){
+					$(this).animate({left:"500px"},3000).animate({height:"300px"},5000,function(){
+						alert("哈哈哈  我已经完成动画啦");
+					});
+				})
+			5: 停止元素的动画 stop([clearQueue],[gotoEnd])  第一个参数为是否清空动画队列，第二个参数为是否让当前动画立即结束
+				$("#panel").hover(function () {
+                    $(this).stop(true)
+                            .animate({height:"150"},200)
+                            .animate({width:"300"},300)
+                },function () {
+                    $(this).stop(true)
+                            .animate({height:"22"},200)
+                            .animate({width:"60"},300)
+                })
+			6：判断是否处于动画状态		is(":animated")
+				if($(element).is(":animated")){
+					
+				}
+			7：延迟动画					.delay(1000)
+				$(this).animate({left:"400px",height:"200px",opacity:"1"},3000)
+                        .delay(1000)
+                        .animate({top:"200px",width:"200px",3000)
+                        .delay(1000)
+                        .fadeOut("slow");
+                })
+			
+
+第五章：JQuery对表单、表格的操作及更多应用
+		0：高度自增
+			$comment.animate({height:"+=50"},400);
+		1：访问对象的属性建议不要使用attr()了，而是用prop();
+		2: 获取选中的下拉框对象
+			$("#select1").dblclick(function(){
+				var $options = $("option:selected",this);
+				$options.appendTo("#select2");
+			})
+			
+			
+		资料补充：
+			$()有2个参数，一个是选择器，一个是作用域。
+			要和$("xxxx,xxx")区分。通常意义下的$('xxxx')其实是默认了第二个作用域。完整说应该是$('xxxx',document)
+		3：.end();	//链式选择时可以使用该方法回到原来的$(this)对象；
+		
+		4：	var hasSelected = $(this).hasClass('selected');
+			//如果选中，则移除selected类，否则就加上selected类；
+			$(this).[hasSelected?'removeClass':'addClass']('selected');
+			//查找内部的checkbox,设置对应的属性
+				.find(':checkbox').attr('checked',!hasSelected);
+		5:	好代码
+			$(function(){
+				$('tr.parent').click(function(){					//获取所谓的父行
+					$(this).toggleClass('selected')					//添加高亮样式
+							.siblings('.child_'+this.id).toggle();	//隐藏/显示所谓的子行
+				})
+			})
+			
+		6：自触发事件	//$(this).click(function(){}).click();		//获取所谓的行
+			$('tr.parent').click(function(){
+				$(this).toggleClass('selected')						//添加/删除高亮
+						.siblings('.child_'+this.id).toggle();		//隐藏/显示所谓的子行
+			}).click();
+		7：去掉px单位
+			第一种方法：直接转单位
+				var thisEle = $('#para').css("font-size");
+				var textFontSize = parseInt(thisEle,10);
+			第二种方法：从倒数第二个字符开始截取字符串(往前)
+				var unit = thisEle.slice(-2);
+
+第六章：JQuery与Ajax的应用
+		1：load()方法：   //用于载入远程HTML代码并插入DOM中
+			1：先定义好test.html的内容
+			2：执行方法：
+				$(function(){
+					$("#send").click(function(){
+						$("#resText").load("test.html");
+					})
+				})
+				//注意：主页面的样式会自动应用到新加载的页面内容上；
+		
+			3：筛选载入的HTML页面
+				$("#resText").load("test.html .para");
+			
+			4: 回调函数
+				$("#resText").load("test.html",{name:"rain",age:"22"},function(responseText,textStatus,XMLHttpRequest){
+					//responseText:		请求返回的内容
+					//textStatus:		请求状态：success、error、notmodified、timeout 4种
+					//XMLHttpRequest:	XMLHttpRequest对象
+				})
+				
+		2：get()/post()方法：
+			$(function(){
+				$("#send").click(function(){
+					$.get("get3.php",{
+						username:$("#username").val(),
+						content:$("#content").val()
+					},function(data,textStatus){
+						var username = data.username;
+						var content = data.content;
+						var txtHtml = "<div class='comment'><h6>"
+										+username+":</h6><p class='para'>"
+										+content+"</p></div>";
+						$("#resText").html(txtHtml);	//将返回的湖十局添加到页面上；
+					},"json");
+				})
+			})
+		3:	$.getScript()  	//动态加载javaScript，为性能所需
+			$(function(){
+				$.getScript('jquery.color.js',function(){		//回调函数
+					$("#go").click(function(){
+						$(".block").animate({backgroundColor:'pink'},1000)
+								   .animate({backgroundColor:'blue'},1000);
+					});
+				});
+			});
+			
+		4：$.each()
+			$.each(data,function(commentIndex,comment){
+				html += '<div class="comment"><h6>'
+					 + comment['username']+':</h6><p class="para">'
+					 + comment['content']+'</p></div>';
+			})
+			
+		5：Ajax回调函数的参数	//还能得到传递的参数的值
+			beforeSend:function(XMLHttpRequest){
+				this;//调用本次Ajax请求时传递的option参数
+			}；
+			complete:function(XMLHttpRequest,textStatus){		//textStatus:返回状态
+				this;//调用本次Ajax请求时传递的option参数
+			}；
+			success:function(data,textStatus){					//textStatus:返回状态
+				//data可能是xmlDoc,jsonObj,html,text等等
+				this;//调用本次Ajax请求时传递的option参数
+			}；
+			error:function(XMLHttpRequest,textStatus，errorThrown){
+				//通常情况下textStatus，errorThrown只有一个包含信息
+				this;//调用本次Ajax请求时传递的options参数
+			}
+			
+		6：序列化元素
+			1：serializes()方法
+				$.get("get1.php",$("#form1").serialize(),function(data,textStatus){
+					$("#resText").html(data);		//将返回的数据添加到页面上；
+				});
+				备注：序列化为字符串形式
+			2：serializeArray()方法
+				备注：序列化成为json的形式
+			3: $.param()方法
+				它是serialize()方法的核心，用来对一个数组或对象按照key/value进行序列化；
+		7：JQuery的AJax全局事件 //ajaxStart和ajaxStop事件
+			<div id="loading">加载中...</div>
+			$('#loading').ajaxStart(function(){
+				$(this).show();
+			}).ajaxStop(function(){
+				$(this).hide();
+			})
+			另外,还有：ajaxComplete()事件;ajaxError()事件;ajaxSend()事件;ajaxSuccess()事件;
+			
+			如果Ajax请求不触发全局事件，那么可以设置：
+			$.ajaxPrefilter(function(options){		//每次发送请求之前
+				options.global = true;
+			})
+
+第七章：JQuery插件的使用和写法
+	1:$.cookie('the_cookie','the_value',{
+			expires:7,				//有效期：单位为天数
+			path:'/',				//路径：默认为创建该Cookie的页面路径
+			domain:'jquery.com',	//域名：默认为创建该Cookie的页面域名
+			secure:true				//安全协议：Cookie的传输会要求一个安全协议，例如HTTPS。
+	  })
