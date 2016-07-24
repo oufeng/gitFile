@@ -553,9 +553,158 @@
 			})
 
 第七章：JQuery插件的使用和写法
-	1:$.cookie('the_cookie','the_value',{
+	1: $.cookie('the_cookie','the_value',{
 			expires:7,				//有效期：单位为天数
 			path:'/',				//路径：默认为创建该Cookie的页面路径
 			domain:'jquery.com',	//域名：默认为创建该Cookie的页面域名
 			secure:true				//安全协议：Cookie的传输会要求一个安全协议，例如HTTPS。
 	  })
+	
+	2: 插件中的闭包+自执行
+		//注意为了更好的兼容性，开始前有个分号
+		;(function($){			//此处将$作为匿名函数的形参
+			/*这里置放代码，可以使用$作为JQuery的缩写别名*/
+		})(JQuery)				//这里就将JQuery作为实参传递给匿名函数了
+		
+		;(function($){
+			var foo;
+			var bar = function(){
+			
+			};
+			$.BAR=bar;
+		})(JQuery)
+		
+	3: JQuery插件的机制
+		JQuery.extend()方法经常用来设置插件方法的一系列默认参数，如下面的代码所示：
+		function foo(options){
+			options = JQuery.extend({
+				name:"bar",
+				length:5,
+				dataType:"xml"			//默认参数
+			},options);					//options为传递的参数
+		}
+		
+		;(function($){
+			$.fn.extend({
+				"somePlugin"：function(options){
+					return this.each(function(){
+						//这里放置代码
+					});
+				}
+			})
+		})(Jquery)
+
+第十章：jQuery各个版本的变化
+	1：使用delegate()方法可以为当前及将来增加的元素绑定事件
+		使用方式：
+		$("table").delegate("td","hover",function(){
+			$(this).toggleClass("hover");
+		})
+	2:	attr()和prop()方法齐用，推荐prop()方法
+	3:  如果是1.7以上版本的jQuery版本，则绑定事件推荐使用on方法代替bind(),delegate(),live()方法
+		$("table").delegate("click","tr",function(){
+			alert("点击了什么什么啦");
+		})
+		
+第十一章：jQuery性能优化和技巧
+	1: 选择合适的选择器
+		1:尽量使用id选择器
+		2：尽量给选择器指定上下文，例如使用find()的方法查找元素
+	2：缓存对象，使用链式编程，不要随便new新对象；或者在全局范围定义一个对象(例如：window对象)
+		window.$my = {
+			head: $("head"),
+			traffic_light: $("#traffic_light"),
+			traffic_button: $("#traffic_button")
+		}
+		
+		并且可以随时在全局对象中增加对象
+		$my.cool_results = $("#some_ul li");
+	3: 循环时先用字符串拼接好html的内容，然后一次性添加到dom树里面去。
+	4：能用for的话就不要用$.each()方法；
+	5: 事件绑定
+		错误的方式：		//这样就会对多个元素进行绑定，很影响页面效果
+		$("#myTable td").click(function(){
+			$(this).css('background','red');
+		})；
+		正确的方式：		//利用事件捕捉只进行了一次事件绑定
+		$("#myTable").click(function(e){
+			var $clicked = $(e.target);		//e.target 捕捉到触发的目标元素
+			$clicked.css('background','red');
+		})；
+		
+		或者借助on()方法：	//利用事件捕捉只进行了一次事件绑定
+		$("#myTable").on("click","td",function(){
+			$(this).css('background','red');
+		})
+	6：使用数组的join()来拼接字符串
+		var array = [];
+		for(var i=0;i<=10000;i++){
+			array[i] = '<li>'+i+'</li>';
+		}
+		$("#list").html(array.join(''));
+	7：原生的javaScript千万不要抛弃
+	
+	
+	8: 禁用页面的右键菜单
+		$(function(){
+			$(document).bind("contextmenu",function(){
+				return false;
+			})
+		})
+		
+	9: 判断浏览器类型
+		$(function(){
+			//Firefox 2 and above
+			if($.support.mozilla && $.support.version >= "1.8"){
+				//do someting
+			}
+			//Safari
+			if($.support.Safari){
+				//do someting
+			}
+			//chrome
+			if($.support.chrome){
+				//do someting
+			}
+			//Opera
+			if($.support.Opera){
+				//do someting
+			}
+			//IE6 and below
+			if($.support.msie && $.browser.version <= 6){
+				//do someting
+			}
+			//anything above IE6
+			if($.support.msie && $.browser.version > 6){
+				//do someting
+			}
+		})
+		
+	10: 返回头部滑动动画
+		var targetOffset = $(this).offset().top;
+		$('html,body').stop().animate({scrollTop:targetOffset},speed);
+		return this;
+	
+	11: 获取鼠标位置
+		$(function(){
+			$(document).mousemove(function(e){
+				$('#XY').html("X:"+e.pageX+" | Y: " + e.pageY);
+			})
+		})
+		
+	12: 设置div在屏幕中央
+		$(function(){
+			JQuery.fn.center = function(){
+				this.css("position","absolute");
+				this.css("top",($(window).height() - this.height()) / 2 + $(window).scrollTop() + "px");
+				this.css("left",($(window).width() - this.width()) / 2 + $(window).scrollLeft() + "px");
+			}
+			//use
+			$("#XY").center();
+		})
+	13: 在一段时间后自动隐藏或者关闭元素(delay属性)
+		$("div").slideUp(3000).delay(3000).slideDown(3000);
+	
+	14：使用css钩子
+		限制Text-Area域中的字符的个数
+		
