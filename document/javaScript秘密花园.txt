@@ -1,0 +1,554 @@
+出处:http://bonsaiden.github.io/JavaScript-Garden/zh/#core.eval
+译者：三生石上，一位本人十分膜拜的程序员
+http://www.cnblogs.com/sanshi/
+
+对象：
+	对象使用和属性：
+		1、JavaScript 中所有变量都可以当作对象使用，除了两个例外 null 和 undefined。
+			false.toString(); // 'false'
+			[1, 2, 3].toString(); // '1,2,3'
+			
+			function Foo(){}
+			Foo.bar = 1;
+			Foo.bar; // 1
+		
+		2、一个常见的误解是数字的字面值（literal）不能当作对象使用。这是因为 JavaScript 解析器的一个错误， 它试图将点操作符解析为浮点数字面值的一部分。
+			2.toString(); // 出错：SyntaxError
+			有很多变通方法可以让数字的字面值看起来像对象。
+
+			2..toString(); // 第二个点号可以正常解析
+			2 .toString(); // 注意点号前面的空格
+			(2).toString(); // 2先被计算
+		
+		3、访问属性
+			有两种方式来访问对象的属性，点操作符或者中括号操作符。
+			var foo = {name: 'kitten'}
+			foo.name; // kitten
+			foo['name']; // kitten
+
+			var get = 'name';
+			foo[get]; // kitten
+
+			foo.1234; // SyntaxError
+			foo['1234']; // works
+			
+			推荐用点操作符
+			
+		4、删除属性
+			delete obj.baz;
+			
+		5、属性名的写法
+			属性名的语法
+			var test = {
+				'case': 'I am a keyword so I must be notated as a string',
+				delete: 'I am a keyword too so me' // 出错：SyntaxError
+			};
+	
+	原型：
+		注意: 简单的使用 Bar.prototype = Foo.prototype 将会导致两个对象共享相同的原型。 因此，改变任意一个对象的原型都会影响到另一个对象的原型，在大多数情况下这不是希望的结果。
+		function Foo() {
+			this.value = 42;
+		}
+		Foo.prototype = {
+			method: function() {}
+		};
+
+		function Bar() {}
+
+		// 设置Bar的prototype属性为Foo的实例对象
+		Bar.prototype = new Foo();
+		Bar.prototype.foo = 'Hello World';
+
+		// 修正Bar.prototype.constructor为Bar本身
+		Bar.prototype.constructor = Bar;
+
+		var test = new Bar() // 创建Bar的一个新实例
+
+		// 原型链
+		test [Bar的实例]
+			Bar.prototype [Foo的实例] 
+				{ foo: 'Hello World' }
+				Foo.prototype
+					{method: ...};
+					Object.prototype
+						{toString: ... /* etc. */};
+						
+		
+		注意：当使用 for in 循环遍历对象的属性时，原型链上的所有属性都将被访问。
+		
+		切记：在写复杂的 JavaScript 应用之前，充分理解原型链继承的工作方式是每个 JavaScript 程序员必修的功课。 要提防原型链过长带来的性能问题，并知道如何通过缩短原型链来提高性能。 更进一步，绝对不要扩展内置类型的原型，除非是为了和新的 JavaScript 引擎兼容。
+	
+	hasOwnProperty函数：
+		hasOwnProperty 是 JavaScript 中唯一一个处理属性但是不查找原型链的函数。
+		
+		JavaScript 不会保护 hasOwnProperty 被非法占用，因此如果一个对象碰巧存在这个属性， 就需要使用外部的 hasOwnProperty 函数来获取正确的结果。
+		var foo = {
+			hasOwnProperty: function() {
+				return false;
+			},
+			bar: 'Here be dragons'
+		};
+
+		foo.hasOwnProperty('bar'); // 总是返回 false
+
+		// 使用其它对象的 hasOwnProperty，并将其上下文设置为foo
+		({}).hasOwnProperty.call(foo, 'bar'); // true
+		
+	for in 循环：
+		和 in 操作符一样，for in 循环同样在查找对象属性时遍历原型链上的所有属性。
+		
+		使用 hasOwnProperty 过滤
+		// foo 变量是上例中的
+		for(var i in foo) {
+			if (foo.hasOwnProperty(i)) {
+				console.log(i);
+			}
+		}
+		
+		总结：推荐总是使用 hasOwnProperty。不要对代码运行的环境做任何假设，不要假设原生对象是否已经被扩展了。
+
+函数：
+	函数声明与表达式：
+		1、函数声明：
+			function foo() {}
+			foo(); // 正常运行，因为foo在代码运行前已经被创建
+			function foo() {}
+		2、函数赋值表达式：
+			var foo = function() {};
+			
+			foo; // 'undefined'
+			foo(); // 出错：TypeError
+			var foo = function() {};//变量提升,定义的变量在头部进行声明
+			
+			//上述代码相当于
+			var foo;
+			foo；
+			foo();
+			foo = function(){};
+			
+		3、命名函数的赋值表达式
+			另外一个特殊的情况是将命名函数赋值给一个变量。
+			var foo = function bar() {
+				bar(); // 正常运行
+			}
+			bar(); // 出错：ReferenceError
+			
+			因为bar 函数声明外是不可见的，这是因为我们已经把函数赋值给了 foo； 然而在 bar 内部依然可见。这是由于 JavaScript 的 命名处理 所致， 函数名在函数内总是可见的。
+	
+	this的工作原理：
+		全局范围内
+			this;
+			当在全部范围内使用 this，它将会指向全局对象。
+			foo();
+			这里 this 也会指向全局对象。
+		test.foo(); 
+			这个例子中，this 指向 test 对象。
+
+		调用构造函数
+			new foo(); 
+			如果函数倾向于和 new 关键词一块使用，则我们称这个函数是 构造函数。 在函数内部，this 指向新创建的对象。
+
+		显式的设置 this
+			function foo(a, b, c) {}
+			var bar = {};
+			foo.apply(bar, [1, 2, 3]); // 数组将会被扩展，如下所示
+			foo.call(bar, 1, 2, 3); // 传递到foo的参数是：a = 1, b = 2, c = 3
+			当使用 Function.prototype 上的 call 或者 apply 方法时，函数内的 this 将会被 显式设置为函数调用的第一个参数。
+			因此函数调用的规则在上例中已经不适用了，在foo 函数内 this 被设置成了 bar。
+		
+		常见误解：
+			尽管大部分的情况都说的过去，不过第一个规则（译者注：这里指的应该是第二个规则，也就是直接调用函数时，this 指向全局对象） 被认为是JavaScript语言另一个错误设计的地方，因为它从来就没有实际的用途。			
+			Foo.method = function() {
+				function test() {
+					// this 将会被设置为全局对象（译者注：浏览器环境中也就是 window 对象）
+				}
+				test();
+			}
+			一个常见的误解是 test 中的 this 将会指向 Foo 对象，实际上不是这样子的。
+
+			解决方案：
+			为了在 test 中获取对 Foo 对象的引用，我们需要在 method 函数内部创建一个局部变量指向 Foo 对象。
+			Foo.method = function() {
+				var that = this;
+				function test() {
+					// 使用 that 来指向 Foo 对象
+				}
+				test();
+			}
+			
+	闭包和引用：其实就是函数内部可以再定义函数，对象里面还有对象
+		模拟私有变量
+			function Counter(start) {
+				var count = start;
+				return {
+					increment: function() {
+						count++;
+					},
+
+					get: function() {
+						return count;
+					}
+				}
+			}
+
+			var foo = Counter(4);
+			foo.increment();
+			foo.get(); // 5
+			
+		循环中的闭包
+			一个常见的错误出现在循环中使用闭包，假设我们需要在每次循环中调用循环序号
+			for(var i = 0; i < 10; i++) {
+				setTimeout(function() {
+					console.log(i);  
+				}, 1000);
+			}
+			上面的代码不会输出数字 0 到 9，而是会输出数字 10 十次。
+			本人的理解：javascript是单线程的语言，会有事件队列，上述的代码会先执行完for循环再执行setTimeout里面的事件
+			代码：
+				for(var i = 0; i < 10; i++) {
+					setTimeout(function() {
+						console.log(i);  
+					}, 1000);console.log("setTimeout外面："+i);
+				}
+				输出：
+				setTimeout外面：0
+				setTimeout外面：1
+				setTimeout外面：2
+				setTimeout外面：3
+				setTimeout外面：4
+				setTimeout外面：5
+				setTimeout外面：6
+				setTimeout外面：7
+				setTimeout外面：8
+				setTimeout外面：9
+				10 10 10 10 10 10 10 10 10 10
+				
+			解决方案:
+				for(var i = 0; i < 10; i++) {
+					(function(e) {
+						setTimeout(function() {
+							console.log(e);  
+						}, 1000);
+					})(i);
+				}
+	
+	arguments 对象：JavaScript 中每个函数内都能访问一个特别变量 arguments。这个变量维护着所有传递到这个函数中的参数列表。
+		转化为数组：
+			arguments 变量不是一个数组（Array）。 尽管在语法上它有数组相关的属性 length，但它不从 Array.prototype 继承，实际上它是一个对象（Object）。
+			所以下面的代码将会创建一个新的数组，包含所有 arguments 对象中的元素。
+			Array.prototype.slice.call(arguments);
+			这个转化比较慢，在性能不好的代码中不推荐这种做法
+		
+		函数传递：
+			下面是将参数从一个函数传递到另一个函数的推荐做法。
+			function foo() {
+				bar.apply(null, arguments);
+			}
+			function bar(a, b, c) {
+				// 干活
+			}
+		
+		总结：强烈建议大家不要使用 arguments.callee 和它的属性。
+	
+	构造函数：
+		JavaScript 中的构造函数和其它语言中的构造函数是不同的。 通过 new 关键字方式调用的函数都被认为是构造函数。
+		显式的 return 表达式将会影响返回结果，但仅限于返回的是一个对象。
+		
+		1、返回新创建的对象
+		function Bar() {
+			return 2;
+		}
+		new Bar(); // 返回新创建的对象
+		译者注：new Bar() 返回的是新创建的对象，而不是数字的字面值 2。 因此 new Bar().constructor === Bar
+
+		2、返回函数里面定义的对象
+		function Test() {
+			this.value = 2;
+
+			return {
+				foo: 1
+			};
+		}
+		new Test(); // 返回的函数中定义的对象
+		译者注：这里得到的 new Test()是函数返回的对象，而不是通过new关键字新创建的对象，因此：
+		(new Test()).value === undefined
+		(new Test()).foo === 1
+		
+		区别：返回两种对象的类型处决与return的是不是一个对象；
+		
+		
+		总结：虽然遗漏 new 关键字可能会导致问题，但这并不是放弃使用原型链的借口。 最终使用哪种方式取决于应用程序的需求，选择一种代码书写风格并坚持下去才是最重要的。
+	
+	作用域与命名空间：
+		尽管 JavaScript 支持一对花括号创建的代码段，但是并不支持块级作用域； 而仅仅支持 函数作用域
+			function test() { // 一个作用域
+				for(var i = 0; i < 10; i++) { // 不是一个作用域
+					// count
+				}
+				console.log(i); // 10
+			}
+		
+		变量声明提升（Hoisting）:变量和函数的声明会提升到页面的顶部
+			JavaScript 会提升变量声明。这意味着 var 表达式和 function 声明都将会被提升到当前作用域的顶部。
+				bar();
+				var bar = function() {};
+				var someValue = 42;
+
+				test();
+				function test(data) {
+					if (false) {
+						goo = 1;
+
+					} else {
+						var goo = 2;
+					}
+					for(var i = 0; i < 100; i++) {
+						var e = data[i];
+					}
+				}
+			
+			上面代码在运行之前将会被转化。JavaScript 将会把 var 表达式和 function 声明提升到当前作用域的顶部。
+				// var 表达式被移动到这里
+				var bar, someValue; // 缺省值是 'undefined'
+
+				// 函数声明也会提升
+				function test(data) {
+					var goo, i, e; // 没有块级作用域，这些变量被移动到函数顶部
+					if (false) {
+						goo = 1;
+
+					} else {
+						goo = 2;
+					}
+					for(i = 0; i < 100; i++) {
+						e = data[i];
+					}
+				}
+
+				bar(); // 出错：TypeError，因为 bar 依然是 'undefined'
+				someValue = 42; // 赋值语句不会被提升规则（hoisting）影响
+				bar = function() {};
+				test();
+		
+		命名空间：避免全局作用域发生冲突
+			只有一个全局作用域导致的常见错误是命名冲突。在 JavaScript中，这可以通过 匿名包装器 轻松解决。
+
+			(function() {
+				// 函数创建一个命名空间
+
+				window.foo = function() {
+					// 对外公开的函数，创建了闭包
+				};
+
+			})(); // 立即执行此匿名函数
+			匿名函数被认为是 表达式；因此为了可调用性，它们首先会被执行。
+
+			( // 小括号内的函数首先被执行
+			function() {}
+			) // 并且返回函数对象
+			() // 调用上面的执行结果，也就是函数对象
+
+数组：
+	数组遍历与属性
+		遍历
+			为了达到遍历数组的最佳性能，推荐使用经典的 for 循环。
+			var list = [1, 2, 3, 4, 5, ...... 100000000];
+			for(var i = 0, l = list.length; i < l; i++) {
+				console.log(list[i]);
+			}
+			
+			上面代码有一个处理，就是通过 l = list.length 来缓存数组的长度。
+			实际上，不使用缓存数组长度的方式比缓存版本要慢很多,因为每次循环中访问它还是有性能开销。
+		
+		length 属性
+			length 属性的 getter 方式会简单的返回数组的长度，而 setter 方式会截断数组。
+
+			var foo = [1, 2, 3, 4, 5, 6];
+			foo.length = 3;
+			foo; // [1, 2, 3]
+
+			foo.length = 6;
+			foo; // [1, 2, 3]
+		结论：
+			为了更好的性能，推荐使用普通的 for 循环并缓存数组的 length 属性。 使用 for in 遍历数组被认为是不好的代码习惯并倾向于产生错误和导致性能问题
+	
+	Array 构造函数
+		由于 Array 的构造函数在如何处理参数时有点模棱两可，因此总是推荐使用数组的字面语法 - [] - 来创建数组。
+		[1, 2, 3]; // 结果: [1, 2, 3]   //推荐做法
+		new Array(1, 2, 3); // 结果: [1, 2, 3]
+
+		[3]; // 结果: [3]
+		new Array(3); // 结果: [] 
+		new Array('3') // 结果: ['3']
+
+		// 译者注：因此下面的代码将会使人很迷惑
+		new Array(3, 4, 5); // 结果: [3, 4, 5] 
+		new Array(3) // 结果: []，此数组长度为 3
+		
+		结论：应该尽量避免使用数组构造函数创建新数组。推荐使用数组的字面语法。它们更加短小和简洁，因此增加了代码的可读性。
+
+类型：
+	相等与比较
+	
+		等于操作符
+			""           ==   "0"           // false
+			0            ==   ""            // true
+			0            ==   "0"           // true
+			false        ==   "false"       // false
+			false        ==   "0"           // true
+			false        ==   undefined     // false
+			false        ==   null          // false
+			null         ==   undefined     // true
+			" \t\r\n"    ==   0             // true
+		
+		严格等于操作符
+			""           ===   "0"           // false
+			0            ===   ""            // false
+			0            ===   "0"           // false
+			false        ===   "false"       // false
+			false        ===   "0"           // false
+			false        ===   undefined     // false
+			false        ===   null          // false
+			null         ===   undefined     // false
+			" \t\r\n"    ===   0             // false
+			
+		比较对象
+			虽然 == 和 === 操作符都是等于操作符，但是当其中有一个操作数为对象时，行为就不同了。
+			{} === {};                   // false
+			new String('foo') === 'foo'; // false
+			new Number(10) === 10;       // false
+			var foo = {};
+			foo === foo;                 // true
+			
+		结论：强烈推荐使用严格等于操作符。如果类型需要转换，应该在比较之前显式的转换， 而不是使用语言本身复杂的强制转换规则。
+		
+	typeof 操作符
+		typeof 操作符（和 instanceof 一起）或许是 JavaScript 中最大的设计缺陷， 因为几乎不可能从它们那里得到想要的结果。
+		JavaScript 类型表格
+			Value               Class      Type
+			-------------------------------------
+			"foo"               String     string
+			new String("foo")   String     object
+			1.2                 Number     number
+			new Number(1.2)     Number     object
+			true                Boolean    boolean
+			new Boolean(true)   Boolean    object
+			new Date()          Date       object
+			new Error()         Error      object
+			[1,2,3]             Array      object
+			new Array(1, 2, 3)  Array      object
+			new Function("")    Function   function
+			/abc/g              RegExp     object (function in Nitro/V8)
+			new RegExp("meow")  RegExp     object (function in Nitro/V8)
+			{}                  Object     object
+			new Object()        Object     object
+		
+		对象类型：
+			Object.prototype.toString.call([])    // "[object Array]"
+			Object.prototype.toString.call({})    // "[object Object]"
+			Object.prototype.toString.call(2)    // "[object Number]"
+		
+		结论：
+			为了检测一个对象的类型，强烈推荐使用 Object.prototype.toString 方法； 因为这是唯一一个可依赖的方式。正如上面表格所示，typeof 的一些返回值在标准文档中并未定义， 因此不同的引擎实现可能不同。
+			除非为了检测一个变量是否已经定义，我们应尽量避免使用 typeof 操作符。
+	
+	instanceof 操作符
+		instanceof 操作符用来比较两个操作数的构造函数。只有在比较自定义的对象时才有意义。 如果用来比较内置类型，将会和 typeof 操作符 一样用处不大。
+		
+		比较自定义对象
+			function Foo() {}
+			function Bar() {}
+			Bar.prototype = new Foo();
+
+			new Bar() instanceof Bar; // true
+			new Bar() instanceof Foo; // true
+
+			// 如果仅仅设置 Bar.prototype 为函数 Foo 本身，而不是 Foo 构造函数的一个实例
+			Bar.prototype = Foo;
+			new Bar() instanceof Foo; // false
+		
+		instanceof 比较内置类型
+			new String('foo') instanceof String; // true
+			new String('foo') instanceof Object; // true
+
+			'foo' instanceof String; // false
+			'foo' instanceof Object; // false
+		
+		注意：有一点需要注意，instanceof 用来比较属于不同 JavaScript 上下文的对象（比如，浏览器中不同的文档结构）时将会出错， 因为它们的构造函数不会是同一个对象。
+		结论：instanceof 操作符应该仅仅用来比较来自同一个 JavaScript 上下文的自定义对象。 正如 typeof 操作符一样，任何其它的用法都应该是避免的
+		
+	类型转换
+		内置类型的构造函数
+			new Number(10) === 10;     // False, 对象与数字的比较
+			Number(10) === 10;         // True, 数字与数字的比较
+			new Number(10) + 0 === 10; // True, 由于隐式的类型转换
+		转换为字符串
+			'' + 10 === '10'; // true
+		转换为数字
+			+'10' === 10; // true
+			
+			+'010' === 10
+			Number('010') === 10
+			parseInt('010', 10) === 10  // 用来转换为整数
+
+			+'010.2' === 10.2
+			Number('010.2') === 10.2
+			parseInt('010.2', 10) === 10
+		转换为布尔型		通过使用 否 操作符两次，可以把一个值转换为布尔型。
+			!!'foo';   // true
+			!!'';      // false
+			!!'0';     // true
+			!!'1';     // true
+			!!'-1'     // true
+			!!{};      // true
+			!!true;    // true
+			
+核心：
+	为什么不要使用 eval
+		eval 函数会在当前作用域中执行一段 JavaScript 代码字符串。
+			var foo = 1;
+			function test() {
+				var foo = 2;
+				eval('foo = 3');
+				return foo;
+			}
+			test(); // 3
+			foo; // 1
+		但是 eval 只在被直接调用并且调用函数就是 eval 本身时，才在当前作用域中执行。
+			var foo = 1;
+			function test() {
+				var foo = 2;
+				var bar = eval;
+				bar('foo = 3');
+				return foo;
+			}
+			test(); // 2
+			foo; // 3
+		在任何情况下我们都应该避免使用 eval 函数。99.9% 使用 eval 的场景都有不使用 eval 的解决方案。
+		
+		伪装的 eval
+			定时函数 setTimeout 和 setInterval 都可以接受字符串作为它们的第一个参数。 这个字符串总是在全局作用域中执行，因此 eval 在这种情况下没有被直接调用
+		
+		安全问题
+			eval 也存在安全问题，因为它会执行任意传给它的代码， 在代码字符串未知或者是来自一个不信任的源时，绝对不要使用 eval 函数。
+
+		结论
+			绝对不要使用 eval，任何使用它的代码都会在它的工作方式，性能和安全性方面受到质疑。 如果一些情况必须使用到 eval 才能正常工作，首先它的设计会受到质疑，这不应该是首选的解决方案， 一个更好的不使用 eval 的解决方案应该得到充分考虑并优先采用。
+	
+	undefined 和 null
+		JavaScript 有两个表示‘空’的值，其中比较有用的是 undefined。
+
+		undefined 的值
+			undefined 是一个值为 undefined 的类型。
+			这个语言也定义了一个全局变量，它的值是 undefined，这个变量也被称为 undefined。 但是这个变量不是一个常量，也不是一个关键字。这意味着它的值可以轻易被覆盖。
+		
+		null的用处：
+			JavaScript 中的 undefined 的使用场景类似于其它语言中的 null，实际上 JavaScript 中的 null 是另外一种数据类型。
+			它在 JavaScript 内部有一些使用场景（比如声明原型链的终结 Foo.prototype = null），但是大多数情况下都可以使用 undefined 来代替。
+	
+	自动分号插入
+		结论：建议绝对不要省略分号，同时也提倡将花括号和相应的表达式放在一行， 对于只有一行代码的 if 或者 else 表达式，也不应该省略花括号。 这些良好的编程习惯不仅可以提到代码的一致性，而且可以防止解析器改变代码行为的错误处理。
+	
+另外:
+	绝对不要使用字符串作为 setTimeout 或者 setInterval 的第一个参数， 这么写的代码明显质量很差。当需要向回调函数传递参数时，可以创建一个匿名函数，在函数内执行真实的回调函数。
+	另外，应该避免使用 setInterval，因为它的定时执行不会被 JavaScript 阻塞。
