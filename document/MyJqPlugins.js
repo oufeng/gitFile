@@ -143,7 +143,10 @@
                         $(this).val(options.text).addClass(options.empty);
                     }
                     else {
-                        $(this).removeClass(options.empty);
+                        //add 2016-10-10 防止多次触发hover的leave事件
+                        if($(this).val() != options.text){
+                           $(this).removeClass(options.empty);   
+                        }
                     }
                 });
             });
