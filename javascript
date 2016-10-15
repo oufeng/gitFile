@@ -1,3 +1,5 @@
+参考自：http://www.softwhy.com/mytest/code/376/index.htm
+
 基础知识
 1：确定浏览器窗口的尺寸（浏览器的视口，不包括工具栏和滚动条）。
     var w=window.innerWidth
