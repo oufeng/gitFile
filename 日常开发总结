@@ -113,6 +113,11 @@
     SET @PageCount=CEILING(1.0*@RecordCount/@PageSize) 
   END
   
+  /*使用*/
+  --EXEC sp_executesql @strSql;
+	EXEC pSysPageData @strSql,'order by QCOperateDate desc',@PageIndex,@PageSize,@PageCount output,@RecordCount OUTPUT;
+	if IsNull(@RecordCount,0)=0 set @RecordCount=0;
+	set @PageCount=ceiling(1.0*@RecordCount/@PageSize);
 3：数据库返回错误信息，用于cs类俘获错误信息
   A:
     RAISERROR('您已经提交了材料，不允许重复上传材料！',16,1,'温馨提示')
