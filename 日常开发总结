@@ -182,3 +182,17 @@
   } catch (e) {
 
   }
+  
+8：jquery事件对象属性
+  1：event.preventDefault();
+    取消可能引起任何语意操作的事件. 比如<a>元素的href链接加载, 表单提交以及click引起复选框的状态切换.
+  2：event.isDefaultPrevented();
+    是否调用过preventDefault()方法
+  3：event.stopPropagation();
+    取消事件冒泡
+  4：event.isPropagationStopped();
+    是否调用过事件冒泡的方法
+  5：event.stopImmediatePropagation();
+    取消执行其他的事件处理函数并取消事件冒泡.如果同一个事件绑定了多个事件处理函数, 在其中一个事件处理函数中调用此方法后将不会继续调用其他的事件处理函数.
+  6：event.stopImmediatePropagation();
+    是否调用过stopImmediatePropagation()方法;
