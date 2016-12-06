@@ -196,3 +196,13 @@
     取消执行其他的事件处理函数并取消事件冒泡.如果同一个事件绑定了多个事件处理函数, 在其中一个事件处理函数中调用此方法后将不会继续调用其他的事件处理函数.
   6：event.stopImmediatePropagation();
     是否调用过stopImmediatePropagation()方法;
+
+9：数组的增加以及删除Push/pop  ||  shift/unshift
+  var ourArray = ["Stimpson", "J", "cat"];
+  var pop = ourArray.pop(); //pop = "cat"; ourArray = ["Stimpson", "J"];
+  ourArray.push("oufeng"); //ourArray = ["Stimpson", "J","oufeng"];
+  
+  var myArray = ["Stimpson", "J", "cat"];
+  var shift = ourArray.shift(); //shift = "Stimpson"; myArray = ["J","cat"];
+  myArray.unshift("oufeng"); //myArray = ["oufeng", "J","cat"];
+  
