@@ -206,3 +206,6 @@
   var shift = ourArray.shift(); //shift = "Stimpson"; myArray = ["J","cat"];
   myArray.unshift("oufeng"); //myArray = ["oufeng", "J","cat"];
   
+10:数组转字符串
+  var testArr = [1,2,3,4,5];
+  var result = JSON.stringify(testArr); //result = "[1,2,3,4,5]";
