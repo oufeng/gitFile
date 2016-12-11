@@ -1,0 +1,108 @@
+1：数组的增加以及删除Push/pop  ||  shift/unshift
+  var ourArray = ["Stimpson", "J", "cat"];
+  var pop = ourArray.pop(); //pop = "cat"; ourArray = ["Stimpson", "J"];
+  ourArray.push("oufeng"); //ourArray = ["Stimpson", "J","oufeng"];
+  
+  var myArray = ["Stimpson", "J", "cat"];
+  var shift = ourArray.shift(); //shift = "Stimpson"; myArray = ["J","cat"];
+  myArray.unshift("oufeng"); //myArray = ["oufeng", "J","cat"];
+  
+2:数组转字符串
+  var testArr = [1,2,3,4,5];
+  var result = JSON.stringify(testArr); //result = "[1,2,3,4,5]";
+
+3:push对于本来就不存在的属性是不能使用的；
+  如果想对象也使用push就必须
+  var obj = {};  //基于length属性push
+  [].push.call(obj,elem);
+
+4:对象的获取，如果是变量名的方式是只能用中括号，不用用.的方式;有空格的属性值也只能用中括号
+  var obj = {"my name":"oufeng","age":16};
+  obj.my name error | obj.[my name] right
+  
+  var property = "age";
+  obj.property error | obj.[property] right
+
+5:json与字符串之间的转化,json.parse与json.stringify的混合使用
+  var str = '{"name":"huangxiaojian","age":"23"}';
+  console.log(JSON.parse(str));
+  /*
+  age: "23"
+  name: "huangxiaojian"
+  __proto__: Object
+  */
+  
+  var a = {a:1,b:2};
+  console.log(JSON.stringify(a));
+  /*  "{"a":1,"b":2}" */;
+6:数组与字符串之间的转化，split与join
+  var str = 'dfsafsdafdsa';
+  console.log(str.split(""));
+  /*["d", "f", "s", "a", "f", "s", "d", "a", "f", "d", "s", "a"]*/
+  
+  var strArr = ["d", "f", "s", "a", "f", "s", "d", "a", "f", "d", "s", "a"];
+  console.log(strArr.join(""));
+  /*'dfsafsdafdsa'*/
+
+7:判断某个对象有没有某个属性用hasOwnProperty
+  var obj = {name:"oufeng",age : 19};
+  obj.hasOwnProperty("name");  //true;
+  obj.hasOwnProperty("height");  //false;
+  
+8:返回限定值的随机数 
+  Math.floor(Math.random() * (Max-Min + 1)) + Min;
+9:反转字符串的解决方案：先把字符串转换成数组，再反转数组，然后把反转后的数组再转换成字符串
+	var str = '123243543534';
+	str = str.split("").reverse().join("");
+
+10:操作字符串的时候注意要使用正则表达式：
+	var str = '@12324354353$#@$@4_';
+	str = str.replace(/[^A-Za-z0-9]/ig,"");
+
+11:Boolean对象的使用：
+	返回一个真假值：Boolean(value);
+
+12:getJSON()的使用
+  $.getJSON("/json/cats.json", function(json) {
+    $(".message").html(JSON.stringify(json));
+  }); 
+
+13:json.foreach：json遍历与数组遍历差不多；
+
+14:json.filter： json筛选数据,与数组差不多；
+
+15:Object.keys： 返回对象的key值并转化成数组;
+	var an_obj = { 100: "a", 2: "b", 7: "c"};
+  console.log(Object.keys(an_obj)); // console: ["2", "7", "100"];
+  
+16:返回电脑的实际坐标：
+  navigator.geolocation
+
+17:数组对象的属性
+  map():			        对数组进行遍历，可返回一个新数组
+	filter():		        对数组进行筛选，可返回一个新数组
+	sort():			        对数组进行排序，操纵的是原来的数组
+	reverse():	        对数组进行反转操作，操纵的也是原来的数组
+	concat():		        链接两个数组组合成一个新的数组
+	reduce():		        对数组进行遍历并积累操作，可返回累积或者累乘的结果
+	slice(start,end):	  返回截取的数组对象，截取的数组索引值包括为[start,end);如end不填的话默认截取全部；
+	splice(index,howmany,item1,.....,itemX):	
+                      返回删除的数组对象:
+                      index:	  必需。整数，规定添加/删除项目的位置，使用负数可从数组结尾处规定位置。
+                      howmany:  必需。要删除的项目数量。如果设置为0，则不会删除项目。
+                      item1,..: 可选。向数组添加的新项目。
+
+18:字符串对象的使用：
+	split()：		        分隔字符串
+	replace()：		      对字符串进行替换
+	substring(start,stop):	
+                       返回截取的字符串，截取的字符索引值包括为[start,stop);如stop不填的话默认截取全部；
+	substr(start,length):	
+                       返回截取的字符串，截取的字符索引值包括为[start,start+length);如length不填的话默认截取全部；
+	match():		         返回匹配的正则表达式的值；
+	value.charCodeAt():	 返回字符或字符串的ASCII编码
+	String.fromCharCode():	
+                       返回ASCII编码对象的字符或字符串
+	
+   
+  
