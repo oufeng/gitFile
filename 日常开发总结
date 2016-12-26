@@ -47,6 +47,11 @@
   END
   GO
   
+  DECLARE @Phone NVARCHAR(4000)
+  SET @Phone = '' 
+  SELECT @Phone = @Phone + isnull(value,'') + ',' FROM dbo.fGetSplitString('dfsa,dfsa1',',') 
+  PRINT @Phone
+  
 2：数据分页存储过程
   /*--
   =============================================
