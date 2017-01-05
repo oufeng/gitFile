@@ -201,3 +201,19 @@
     取消执行其他的事件处理函数并取消事件冒泡.如果同一个事件绑定了多个事件处理函数, 在其中一个事件处理函数中调用此方法后将不会继续调用其他的事件处理函数.
   6：event.stopImmediatePropagation();
     是否调用过stopImmediatePropagation()方法;
+
+9：解决多个JQuery版本共存的问题，由于旧的Jquery完成了模板页的封装不能删除且旧的Jquery版本不能满足新的需求，需要多个Jquery版本共存。
+  1：利用jQuery.noConflict(true)来实现版本共存；
+  2：在my.js中引入新的Jquery版本
+     // myscript.js
+     (function () {
+        // BEGIN
+        /*! jQuery v1.11.1 */
+        !function(a,b){"object"==typeof module&&"object"==typeof module.exports?...
+        if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=...
+        },cur:function(){var a=Zb.propHooks[this.prop];return a&&a.get?a.get(thi...
+	
+        var $ = jQuery.noConflict(true);
+        // TODO: javascript code here...
+        // END
+     })();
