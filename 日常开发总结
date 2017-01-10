@@ -204,6 +204,27 @@
 
 9：解决多个JQuery版本共存的问题，由于旧的Jquery完成了模板页的封装不能删除且旧的Jquery版本不能满足新的需求，需要多个Jquery版本共存。
   1：利用jQuery.noConflict(true)来实现版本共存；
+     先引入
+     <script src="http://libs.baidu.com/jquery/1.6.4/jquery.min.js"></script>
+     console.log($.fn.jquery);  //1.6.4
+     
+     再引入
+     <script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+     console.log($.fn.jquery);  //1.8.3
+     
+     把1.8.3的全局变量（$,JQuery）单独抽出来，让$和JQuery让渡给1.6.4
+     var jQuery_1_8_3 = $.noConflict(true);
+     console.log(jQuery_1_8_3.fn.jquery); //1.8.3
+     console.log($.fn.jquery);  //1.6.4
+     
+     创建一个匿名函数，把jQuery_1_8_3传递给$和JQuery;
+     (function($,jQuery){
+	console.log($.fn.jquery);  //1.8.3
+	console.log(jQuery.fn.jquery);  //1.8.3
+     })(jQuery_1_8_3,jQuery_1_8_3)
+     
+     console.log($.fn.jquery);  //1.6.4
+     
   2：在my.js中引入新的Jquery版本
      // myscript.js
      (function () {
