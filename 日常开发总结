@@ -238,3 +238,74 @@
         // TODO: javascript code here...
         // END
      })();
+     
+10：ASP.NET导出Excel
+  1：cs类中创建DataTableExportToCsv方法；
+     	public static string DataTableExportToCsv(DataTable dtData)
+        {
+            System.IO.StringWriter strWriter;
+
+            strWriter = new System.IO.StringWriter();
+            //插入标题
+            foreach (DataColumn field in dtData.Columns)
+            {
+                if (!string.IsNullOrEmpty(field.ColumnName))
+                {
+                    strWriter.Write("\"" + field.ColumnName.ToString() + "\"" + ",");
+                }
+            }
+            strWriter.Write("\n");
+            //插入内容
+            foreach (DataRow dr in dtData.Rows)
+            {
+                for (int i = 0; i < dtData.Columns.Count; i++)
+                {
+                    strWriter.Write("\"" + dr[i].ToString() + "\"" + ",");
+                }
+                strWriter.Write("\n");
+            }
+            strWriter.Close();
+            return strWriter.ToString();
+        }
+     
+  2：ashx或者aspx中设置输出流
+     	public void ExportDetailExcel()
+        {
+            Response.ContentEncoding = System.Text.Encoding.Default;
+            Response.AppendHeader("Content-Disposition", "attachment;filename=ReviewDetail.csv");
+            Response.ContentType = "text/csv";
+            Response.Charset = "UTF-8";
+            try
+            {
+                DataSet result = yourDateSet;
+                str = DataTableExportToCsv(result.Tables[0]);
+            }
+            catch (Exception ex)
+            {
+                str = "{\"success\": false,\"errorText\":\"" + ex.Message + "\"}";
+            }
+            Response.Write(str);
+            Response.Flush();
+            Response.End();
+        }
+	
+  3：js中设置通过ifrmae异步下载文档的方法
+  	function iframeGetFile(opts) {
+	    var defaultOpts = {
+		filePath: '',
+		onload: function (e) { }
+	    }, iframeFile;
+	    $.extend(defaultOpts, opts);
+	    iframeFile = document.createElement("iframe");
+	    iframeFile.onload = function (e) {
+		defaultOpts.onload.call(this, e);
+		$(iframeFile).remove();
+	    }
+	    iframeFile.src = defaultOpts.filePath;
+	    iframeFile.style.cssText = "display:none;";
+	    document.body.appendChild(iframeFile);
+	};
+	
+  4：js中调用后台
+  	iframeGetFile({ filePath: requestUrl + "?" + strOptions });
+	
