@@ -9,7 +9,7 @@
 > * 子串匹配属性选择器<br>
     **[foo^="red"]** `选择foo属性以red开头的元素`<br>
     **[foo$="red"]** `选择foo属性以red结尾的元素`<br>
-    **[foo*="red"]** `选择foo属性包含red的元素`<br>
+    **[foo\*="red"]** `选择foo属性包含red的元素`<br>
 > * 特定属性选择类型<br>
     **img[src |="figure"]** `以figure开头或者等于figure的属性`<br>
 > * 区分后代元素以及筛选相同匹配的元素<br>
