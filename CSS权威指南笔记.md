@@ -95,6 +95,7 @@
     字体的继承可以嵌套，慎用;<br><br>
 > * 字体风格 font-style 斜体/直立/倾斜/继承<br><br>
 > * 行高,font-size总是在line-height之前的<br>
+
 ## 第六章：文本属性<br>
 > * 文本缩进主要用于段落的开头，text-indent<br>
     能继承，百分数慎用；<br>
@@ -135,3 +136,42 @@
 > * white-space属性<br>
 > * direction 文本方向<br>
 
+## 第七章：基本视觉格式化<br>
+> * 1：元素的width<br>
+    IE7,8:左边界-右内边界(只是内容区)<br>
+    Chrome,ie11:左边界-右内边界(只是内容区) + 左内边距(padding-left) + 右内边距(padding-right)<br>
+> * 2：元素的height<br>
+	IE7,8:上内边界-下内边界(只是内容区)<br>
+    Chrome,ie11:上内边界-下内边界(只是内容区) + 上内边距(padding-top) + 下内边距(padding-bottom)<br>
+> * 3：使用auto<br>
+    width,margin-left,margin-right这三个值必须要指定其中的两个值才可以使用auto;优先考虑margin-left,再到width，再到margin-right;
+三个元素都设置auto等于没有设置；<br>
+> * 4：替换元素的auto<br>
+    替换元素的长宽如果指定auto属性的话，会随着另一个属性的改变而等比例地改变；<br>
+> * 5：垂直属性<br>
+    如果一个正常流中的一个快元素的margin-top或margin-bottom设置为auto,她会自动计算为0；  所以不能设置垂直居中；<br>
+> * 6：height=auto<br>
+   1:如果父元素设置height=auto，而没有边框或者内边距。那么父元素的高度只是子元素高度的 内容区+内边距+边框的高度；<br>
+   2:如果父元素设置height=auto，而有边框或者内边距。那么父元素的高度就是子元素高度的  外边距+内容区+内边距+边框的高度；<br>
+> * 7：合并垂直外边距<br>
+    1:只有普通文档流中的块框垂直外边距才会发生合并。<br>
+    2:行内框、浮动框或绝对定位之间的外边距不会合并。<br><br>
+    
+## 第八章：内边距、边框和外边距<br>
+## 第九章：背景和颜色<br>
+> * 1：背景图像 background-image<br>
+	Body {background-image:url(bg23.gif)};
+> * 2：有方向的重复 background-repeat<br>
+	repeat repeat-x repeat-y no-repeat inherit
+> * 3：背景定位 background-position<br>
+	接收两个值，可以是数值，也可以是方向值的英文；<br>
+	P{background-position:0% 0%;}<br>
+	P{background-position:top bottom;}<br>
+> * 4：背景颜色：background-color: red;<br>
+> * 5：关联属性：Background-attachment: scroll fixed inherit<br>
+	让背景图像类似于position：fixed的效果；<br>
+	不会随文档滚动，而是随着视窗的大小而确定；<br>
+> * 汇总：<br>	
+	上述的背景属性可以汇总到一个简写属性：background。这个属性可以从各个其他背景属性取一个值，而且可以采用任何顺序；<br>
+例如：<br>
+body{background:white url(yinyang.gif) top left repeat scroll};
