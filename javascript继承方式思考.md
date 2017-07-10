@@ -61,8 +61,8 @@ var Doctor = deepCopy(Chinese);
 Doctor.birthPlaces.push('厦门');
 alert(Doctor);
 /*
-	优点：能继承父类原生的东西；
-	缺点：内存占用大，深继承；
+  优点：能继承父类原生的东西；
+  缺点：内存占用大，深继承；
 */
 
 
@@ -115,8 +115,8 @@ var teacher = Object.create(Chinese);
 teacher.career = '医生';
 alert(teacher.nation);
 /*
-    优点：js原生的方法，封装性好
-    缺点：未知；
+  优点：js原生的方法，封装性好
+  缺点：未知；
 */
 
 ```
