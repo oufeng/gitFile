@@ -47,7 +47,7 @@
 **git reflog**<br>
 该命令可以在回退版本后再恢复到新版本使用<br><br>
 
-> **8:工作区与暂缓区**<br>
+> * **8:工作区与暂缓区**<br>
 **工作区**<br>
 就是在电脑里能看到的目录，比如我的gitFile文件夹就是一个工作区;<br>
 **版本库（Repository）**<br>
@@ -62,7 +62,7 @@ Git的版本库里存了很多东西，其中最重要的就是称为stage（或
 由于上述讲到有暂缓区和工作区，所以每次修改，如果不add到暂存区，那就不会加入到commit中。<br>
 只修改不add到暂缓区的话，commit命令是不会把修改的内容提交到版本库的，commit只会把暂缓区的东西提交到版本库。<br><br>
 
-> **10:撤销修改**<br>
+> * **10:撤销修改**<br>
 Git会告诉你，**git checkout -- file**可以丢弃工作区的修改<br>
 **$ git checkout -- gitStudy.txt**    	//舍弃工作区的修改<br><br>
 这样的修改有**两种**情况：<br>
@@ -77,7 +77,7 @@ Git会告诉你，**git checkout -- file**可以丢弃工作区的修改<br>
 **场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。**<br>
 **场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。**<br><br>
 
-> **11:删除文件**<br>
+> * **11:删除文件**<br>
 **$ rm test.txt**<br>
 **$ git rm test.txt**<br>
 **$ git commit -m "remove test.txt"**<br><br>
@@ -85,7 +85,7 @@ Git会告诉你，**git checkout -- file**可以丢弃工作区的修改<br>
 **$ git checkout -- test.txt**<br>
 git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。<br><br>
 
-> **12:远程仓库**<br>
+> * **12:远程仓库**<br>
 **第一步：先让远程仓库识别你的版本库**<br>
 创建SSH Key。在用户主目录下，看看有没有.ssh目录，如果有，再看看这个目录下有没有id_rsa和id_rsa.pub这两个文件，如果已经有了，可直接跳到下一步。如果没有，打开Shell（Windows下打开Git Bash），创建SSH Key<br><br>
 $ ssh-keygen -t rsa -C "youremail@example.com"<br>
@@ -93,7 +93,7 @@ $ ssh-keygen -t rsa -C "youremail@example.com"<br>
 **第2步：登陆GitHub，打开“Account settings”，“SSH Keys”页面：**<br>
 然后，点“Add SSH Key”，填上任意Title，在Key文本框里粘贴id_rsa.pub文件的内容：<br><br>
 
-> **13:添加远程库**<br>
+> * **13:添加远程库**<br>
 首先，登陆**GitHub**，然后，在右上角找到**“Create a new repo”**按钮，创建一个新的仓库：例如仓库名为“learngit”<br><br>
 然后，我们根据GitHub的提示，在本地的**learngit**仓库下运行命令：<br><br>
 **$ git remote add origin_github git@github.com:michaelliao/learngit.git**<br><br>
@@ -109,7 +109,7 @@ $ ssh-keygen -t rsa -C "youremail@example.com"<br>
 关联后，使用命令**git push -u origin master**第一次推送master分支的所有内容；<br>
 此后，每次本地提交后，只要有必要，就可以使用命令git push origin master推送最新修改；<br>
 
-> **14：从远程库克隆**<br>
+> * **14：从远程库克隆**<br>
 用命令**git clone**克隆一个本地库：<br>
 **$ git clone git@github.com:OuFeng/PersonalCollection.git**<br><br>
 你也许还注意到，GitHub给出的地址不止一个，还可以用**https://github.com/OuFeng/PersonalCollection.git**这样的地址。实际上，Git支持多种协议，默认的git://使用ssh，但也可以使用https等其他协议。<br>
