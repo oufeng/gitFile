@@ -1,3 +1,10 @@
+## 前言
+### 1、使用VSCORE来对MarkDown进行编写。
+### 2、安装插件(Auto-Open Markdown Preview)。
+### 3、安装插件(Instant Markdown)。
+### 4、<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>来设置颜色主题。
+<br>
+
 ## 1、标题:  
 # h1级标题
 ## h2级标题
