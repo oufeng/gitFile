@@ -3,7 +3,7 @@
 
 ---
 
-<p>＃欢迎来到StackEdit！</p>
+<h2 id="欢迎来到stackedit！">欢迎来到StackEdit！</h2>
 <p>嗨！我是** StackEdit <strong>中的第一个降价文件。如果你想了解StackEdit，你可以阅读我。如果你想玩降价，你可以编辑我。如果你已经完成了，你可以通过打开导航栏左边的</strong>文件浏览器**来创建新文件。</p>
 <p>＃文件</p>
 <p>StackEdit将您的文件存储在浏览器中，这意味着您的所有文件都会自动保存在本地，并且可以脱机访问**！**</p>
@@ -18,10 +18,10 @@
 <h2 id="导出文件">导出文件</h2>
 <p>您可以通过单击当前文件导出<strong>导出到磁盘</strong>在菜单中。您可以选择将文件以简单的降价格式导出，如使用把手模板的HTML格式或PDF格式。</p>
 <p>＃同步</p>
-<p>同步是StackEdit的最大功能之一。它使您可以将工作区中的任何文件与存储在您的** Google Drive <strong>，您的</strong> Dropbox <strong>和</strong>                                                                                                                                                                                                                                     ** GitHub **帐户中的其他文件同步。这使您可以继续在其他设备上撰写文档，与您共享文件的人员协作，轻松集成到您的工作流程中…同步机制在后台每分钟进行一次，下载，合并和上传文件修改。</p>
+<p>同步是StackEdit的最大功能之一。它使您可以将工作区中的任何文件与存储在您的** Google Drive <strong>，您的</strong> Dropbox <strong>和</strong>                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ** GitHub **帐户中的其他文件同步。这使您可以继续在其他设备上撰写文档，与您共享文件的人员协作，轻松集成到您的工作流程中…同步机制在后台每分钟进行一次，下载，合并和上传文件修改。</p>
 <p>有两种类型的同步，它们可以相互补充：</p>
 <ul>
-<li>工作区同步将自动同步所有文件，文件夹和设置这将允许您在任何其他设备上获取您的工作区&gt;要开始同步您的工作区，只需在菜单中使用谷歌登录即可同步将。保持与一个或多个文件同步的工作区的一个文件<strong>谷歌驱动器</strong>，** Dropbox的<strong>或</strong> GitHub的**。&gt;在开始同步文件之前，您必须在*                                                                                                                                                                                                                                    *同步**子菜单中链接一个帐户。</li>
+<li>工作区同步将自动同步所有文件，文件夹和设置这将允许您在任何其他设备上获取您的工作区&gt;要开始同步您的工作区，只需在菜单中使用谷歌登录即可同步将。保持与一个或多个文件同步的工作区的一个文件<strong>谷歌驱动器</strong>，** Dropbox的<strong>或</strong> GitHub的**。&gt;在开始同步文件之前，您必须在*                                                                                                                                                                                                                                                                                                                                                                                                                                                                  *同步**子菜单中链接一个帐户。</li>
 </ul>
 <h2 id="打开一个文件">打开一个文件</h2>
 <p>您可以打开** Google Drive <strong>，</strong> Dropbox <strong>或</strong> GitHub <strong>中的文件，方法是打开</strong>同步<strong>子菜单并单击</strong>从**打开。一旦在工作区中打开，文件中的任何修改都将自动同步。</p>
@@ -36,7 +36,7 @@
 <h2 id="管理文件同步">管理文件同步</h2>
 <p>由于一个文件可以与多个位置进行同步，你可以列出并通过单击管理同步位置<strong>文件同步</strong>的<strong>同步</strong>子菜单。这使您可以列出并删除链接到文件的同步位置。</p>
 <p>＃出版物</p>
-<p>通过StackEdit发布，您可以轻松地在线发布文件。一旦你对一个文件感到满意，你可以将它发布到不同的托管平台，如** Blogger <strong>，</strong> Dropbox <strong>，</strong> Gist <strong>，</strong> GitHub的**，<strong>谷歌驱动</strong>，*                                                                                                                                                                                                                                     * WordPress的<strong>和</strong>的Zendesk **。通过[车把模板（<a href="http://handlebarsjs.com/">http://handlebarsjs.com/</a> ），您可以完全控制您输出的内容。</p>
+<p>通过StackEdit发布，您可以轻松地在线发布文件。一旦你对一个文件感到满意，你可以将它发布到不同的托管平台，如** Blogger <strong>，</strong> Dropbox <strong>，</strong> Gist <strong>，</strong> GitHub的**，<strong>谷歌驱动</strong>，*                                                                                                                                                                                                                                                                                                                                                                                                                                                                   * WordPress的<strong>和</strong>的Zendesk **。通过[车把模板（<a href="http://handlebarsjs.com/">http://handlebarsjs.com/</a> ），您可以完全控制您输出的内容。</p>
 <blockquote>
 <p>在开始发布之前，您必须在<strong>发布</strong>子菜单中链接一个帐户。</p>
 </blockquote>
@@ -63,11 +63,11 @@
 <h2 id="katex">KaTeX</h2>
 <p>您可以使用[KaTeX]（<a href="https://khan.github.io/KaTeX/">https://khan.github.io/KaTeX/</a> ）渲染LaTeX数学表达式：</p>
 <p>在<em>伽玛功能</em>满足$ \伽玛（ñ）=（N-1）！\四\ FORALL  -  \ mathbb  -  $是通过欧拉积分</p>
-<p><span class="katex--display">KaTeX parse error: Expected 'EOF', got '\伽' at position 3:   \̲伽̲玛（Z）= \ INT _0 …</span></p>
+<p><span class="katex--display">KaTeX parse error: Expected 'EOF', got '\伽' at position 7:       \̲伽̲玛（Z）= \ INT _0 …</span></p>
 <blockquote>
 <p>您可以找到更多关于** LaTeX **数学表达式[here]（<a href="http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference">http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference</a> ）的信息。</p>
 </blockquote>
 <h2 id="uml图">UML图</h2>
 <p>你可以使用[Mermaid]（<a href="https://mermaidjs.github.io/">https://mermaidjs.github.io/</a> ）来渲染UML图。例如，这将产生一个序列图：</p>
-<p><code></code> <code>美人鱼序列图片爱丽丝- &gt;&gt;鲍勃：你好鲍勃，你好吗？鲍勃- &gt;&gt;约翰：约翰，你呢！鲍勃- X爱丽丝：我很好，谢谢鲍勃- X约翰：我很好，谢谢！注意约翰的权利：鲍勃想了很长时间，很久以前，文本不适合连续.Bob - &gt; Alice：约翰约会... Alice - &gt; John：是的... 。（约），你好吗？</code> <code></code>这将产生一个流程图：<code></code> <code>美人鱼图LR A [Square Rect] - 链接文字 - &gt; B（（Circle））A - &gt; C（Round Rect）B - &gt; d {菱形}℃ - &gt; d</code> <code></code></p>
+<p><code></code> <code>美人鱼序列图片爱丽丝 - &gt;&gt;鲍勃：你好鲍勃，你好吗鲍勃 - &gt;&gt;约翰：约翰，你呢鲍勃 - X爱丽丝：我很好，谢谢鲍勃 - X约翰：我很好，谢谢！注意约翰的权利：鲍勃想了很长时间，很久以前，文本不适合连续.Bob - &gt; Alice：约翰约会... Alice - &gt; John：是的....（ （）），你好吗？</code> <code></code>这将产生一个流程图：<code></code> <code>美人鱼图LR A [Square Rect] - 链接文字 - &gt; B（（Circle））A - &gt; C（Round Rect）B - &gt; d {菱形}℃ - &gt; d</code> <code></code></p>
 
