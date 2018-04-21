@@ -50,7 +50,6 @@
 <p>一般情况下，大多数文档会采用下面几种布局：</p>
 <pre class=" language-markdown"><code class="prism  language-markdown"><span class="token title important"><span class="token punctuation">#</span> 文档标题  </span>
 
-
 简短的介绍
 
 [TOC]
@@ -185,11 +184,7 @@ Text after... DO NOT DO THIS.
 <p>反引号"转义"是Markdown元字符最常用的方法; 在大多数需要转义的情况下，任何代码字体的转义都是有必要的。</p>
 <h3 id="代码块">代码块</h3>
 <p>对于比单行更长的代码引用，请使用代码块：</p>
-<pre>```python
-def Foo(self, bar):
-  self.bar = bar
-```
-</pre>
+<p>&lt; pre &gt; <code>python def Foo （ self ， bar ）： self 。栏=酒吧</code> &lt;/预&gt;</p>
 <h4 id="语言声明">语言声明</h4>
 <p>语言声明是最好的实践，以便语法荧光笔和编辑器都不必猜测。</p>
 <h4 id="缩进的代码块有时更干净">缩进的代码块有时更干净</h4>
