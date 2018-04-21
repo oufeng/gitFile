@@ -104,7 +104,7 @@ for details.
 <h3 id="atx风格标题">ATX风格标题</h3>
 <pre class=" language-markdown"><code class="prism  language-markdown"><span class="token title important"><span class="token punctuation">##</span> Heading 2</span>
 </code></pre>
-<p>含有“=”或“-”下划线的标题维护起来会很讨厌，而且和其他标题语法不兼容。用户不知道“—”的意思是H1还是H2。</p>
+<p>含有"=“或”-“下划线的标题维护起来会很讨厌，而且和其他标题语法不兼容。用户不知道”—"的意思是H1还是H2。</p>
 <pre class=" language-markdown"><code class="prism  language-markdown"><span class="token title important">Heading - do you remember what level? DO NOT DO THIS.
 <span class="token punctuation">---------</span></span>
 </code></pre>
@@ -123,8 +123,8 @@ Text after...
 Text after... DO NOT DO THIS.
 </code></pre>
 <h2 id="列表">列表</h2>
-<h3 id="对长列表使用“懒人编号法”">对长列表使用“懒人编号法”</h3>
-<p>Markdown非常智能，可以让生成的HTML文件正确排列你的有序列表。对于比较长的、可能会修改的列表（尤其是很长的嵌套列表），请使用“懒人编号法”：</p>
+<h3 id="对长列表使用懒人编号法">对长列表使用"懒人编号法"</h3>
+<p>Markdown非常智能，可以让生成的HTML文件正确排列你的有序列表。对于比较长的、可能会修改的列表（尤其是很长的嵌套列表），请使用"懒人编号法"：</p>
 <pre class=" language-markdown"><code class="prism  language-markdown"><span class="token list punctuation">1.</span>  Foo.
 <span class="token list punctuation">1.</span>  Bar.
 <span class="token code keyword" spellcheck="false">    1.  Foofoo.</span>
@@ -138,33 +138,31 @@ Text after... DO NOT DO THIS.
 </code></pre>
 <h3 id="嵌套列表间距">嵌套列表间距</h3>
 <p>嵌套列表时，对数字开头的列表和星号开头的列表都使用四个空格的缩进：</p>
-<pre class=" language-markdown"><code class="prism  language-markdown"><span class="token list punctuation">1.</span>  2 spaces after a numbered list.
-<span class="token code keyword" spellcheck="false">    4 space indent for wrapped text.</span>
-<span class="token list punctuation">2.</span>  2 spaces again.
+<pre class=" language-markdown"><code class="prism  language-markdown"><span class="token list punctuation">1.</span>  编号列表后要留两个空格。
+<span class="token code keyword" spellcheck="false">    包含文本要留4个空格。</span>
+<span class="token list punctuation">2.</span>  再一次两个空格。
 
-<span class="token list punctuation">*</span>   3 spaces after a bullet.
-<span class="token code keyword" spellcheck="false">    4 space indent for wrapped text.</span>
-<span class="token code keyword" spellcheck="false">    1.  2 spaces after a numbered list.</span>
-<span class="token code keyword" spellcheck="false">        8 space indent for the wrapped text of a nested list.</span>
-<span class="token code keyword" spellcheck="false">    2.  Looks nice, don't it?</span>
-<span class="token list punctuation">*</span>   3 spaces after a bullet.
+<span class="token list punctuation">*</span>   星号后面留3个空格。
+<span class="token code keyword" spellcheck="false">    包含文本要留4个空格。</span>
+<span class="token code keyword" spellcheck="false">    1.  编号列表后要留两个空格。</span>
+<span class="token code keyword" spellcheck="false">        嵌套列表的包含文本要留8个空格</span>
+<span class="token code keyword" spellcheck="false">    2.  看起来不错，不是吗？</span>
+<span class="token list punctuation">*</span>   星号后面留3个空格。
 </code></pre>
-<p>The following works, but it’s very messy:</p>
-<pre class=" language-markdown"><code class="prism  language-markdown"><span class="token list punctuation">*</span> One space,
-with no indent for wrapped text.
-<span class="token code keyword" spellcheck="false">     1. Irregular nesting... DO NOT DO THIS.</span>
+<p>下面这种写法也能奏效，但看起来很乱：</p>
+<pre class=" language-markdown"><code class="prism  language-markdown"><span class="token list punctuation">*</span> 一个空格,
+包含文本没有缩进。
+<span class="token code keyword" spellcheck="false">     1. 没有嵌套规则... 不要这样做。</span>
 </code></pre>
-<p>Even when there’s no nesting, using the 4 space indent makes layout consistent<br>
-for wrapped text:</p>
+<p>即使没有嵌套，使用四个空格的缩进也会让包含文本的布局显得更加连续：</p>
 <pre class=" language-markdown"><code class="prism  language-markdown"><span class="token list punctuation">*</span>   Foo,
-<span class="token code keyword" spellcheck="false">    wrapped.</span>
+<span class="token code keyword" spellcheck="false">    wrapped。</span>
 
-<span class="token list punctuation">1.</span>  2 spaces
-<span class="token code keyword" spellcheck="false">    and 4 space indenting.</span>
-<span class="token list punctuation">2.</span>  2 spaces again.
+<span class="token list punctuation">1.</span>  两个空格
+<span class="token code keyword" spellcheck="false">    和4个空格缩进。</span>
+<span class="token list punctuation">2.</span>  再一次两个空格。
 </code></pre>
-<p>However, when lists are small, not nested, and a single line, one space can<br>
-suffice for both kinds of lists:</p>
+<p>当然，如果列表规模很小、没有嵌套、只有单行，那么单个空格也足够了：</p>
 <pre class=" language-markdown"><code class="prism  language-markdown"><span class="token list punctuation">*</span> Foo
 <span class="token list punctuation">*</span> Bar
 <span class="token list punctuation">*</span> Baz.
@@ -172,59 +170,49 @@ suffice for both kinds of lists:</p>
 <span class="token list punctuation">1.</span> Foo.
 <span class="token list punctuation">2.</span> Bar.
 </code></pre>
-<h2 id="code">Code</h2>
-<h3 id="inline">Inline</h3>
-<p>`Backticks` designate <code>inline code</code>, and will render all wrapped content<br>
-literally. Use them for short code quotations and field names:</p>
-<pre class=" language-markdown"><code class="prism  language-markdown">You'll want to run <span class="token code keyword" spellcheck="false">`really_cool_script.sh arg`</span>.
+<h2 id="代码">代码</h2>
+<h3 id="单行代码">单行代码</h3>
+<p>`反引号` 并将从字面上呈现所有包含的内容。将它们用于短代码引用和字段名称：</p>
+<pre class=" language-markdown"><code class="prism  language-markdown">你想运行 <span class="token code keyword" spellcheck="false">`really_cool_script.sh arg`</span>。
 
-Pay attention to the <span class="token code keyword" spellcheck="false">`foo_bar_whammy`</span> field in that table.
+请注意 <span class="token code keyword" spellcheck="false">`foo_bar_whammy`</span> 字段。
 </code></pre>
-<p>Use inline code when referring to file types in an abstract sense, rather than a<br>
-specific file:</p>
-<pre class=" language-markdown"><code class="prism  language-markdown">Be sure to update your <span class="token code keyword" spellcheck="false">`README.md`</span>!
+<p>只在抽象意义上指明一个文件类型时，使用单行代码而不是一个具体的文件：</p>
+<pre class=" language-markdown"><code class="prism  language-markdown">记得更新您的 <span class="token code keyword" spellcheck="false">`README.md`</span>!
 </code></pre>
-<p>Backticks are the most common approach for “escaping” Markdown metacharacters;<br>
-in most situations where escaping would be needed, code font just makes sense<br>
-anyway.</p>
-<h3 id="codeblocks">Codeblocks</h3>
-<p>For code quotations longer than a single line, use a codeblock:</p>
+<p>反引号"转义"是Markdown元字符最常用的方法; 在大多数需要转义的情况下，任何代码字体的转义都是有必要的。</p>
+<h3 id="代码块">代码块</h3>
+<p>对于比单行更长的代码引用，请使用代码块：</p>
 <pre>```python
 def Foo(self, bar):
   self.bar = bar
 ```
 </pre>
-<h4 id="declare-the-language">Declare the language</h4>
-<p>It is best practice to explicitly declare the language, so that neither the<br>
-syntax highlighter nor the next editor must guess.</p>
-<h4 id="indented-codeblocks-are-sometimes-cleaner">Indented codeblocks are sometimes cleaner</h4>
-<p>Four-space indenting is also interpreted as a codeblock. These can look<br>
-cleaner and be easier to read in source, but there is no way to specify the<br>
-language. We encourage their use when writing many short snippets:</p>
-<pre class=" language-markdown"><code class="prism  language-markdown">You'll need to run:
+<h4 id="语言声明">语言声明</h4>
+<p>语言声明是最好的实践，以便语法荧光笔和编辑器都不必猜测。</p>
+<h4 id="缩进的代码块有时更干净">缩进的代码块有时更干净</h4>
+<p>四空格缩进也被解释为一个代码块。这样可以看起来更干净，并且在源代码中更容易阅读，但是无法指定语言。我们鼓励他们在编写很多简短的代码片段时使用它们：</p>
+<pre class=" language-markdown"><code class="prism  language-markdown">你需要运行:
 
 <span class="token code keyword" spellcheck="false">    bazel run :thing -- --foo</span>
 
-And then:
+然后:
 
 <span class="token code keyword" spellcheck="false">    bazel run :another_thing -- --bar</span>
 
-And again:
+再次:
 
 <span class="token code keyword" spellcheck="false">    bazel run :yet_again -- --baz</span>
 </code></pre>
-<h4 id="escape-newlines">Escape newlines</h4>
-<p>Because most commandline snippets are intended to be copied and pasted directly<br>
-into a terminal, it’s best practice to escape any newlines. Use a single<br>
-backslash at the end of the line:</p>
+<h4 id="换行符">换行符</h4>
+<p>由于大多数命令行代码段要被复制并直接粘贴到终端中，所以最好避免任何换行符。而是在行尾使用一个反斜杠：</p>
 <pre>```shell
 bazel run :target -- --flag --foo=longlonglonglonglongvalue \
 --bar=anotherlonglonglonglonglonglonglonglonglonglongvalue
 ```
 </pre>
-<h4 id="nest-codeblocks-within-lists">Nest codeblocks within lists</h4>
-<p>If you need a codeblock within a list, make sure to indent it so as to not break<br>
-the list:</p>
+<h4 id="列表内嵌代码块">列表内嵌代码块</h4>
+<p>如果你要在列表中内嵌代码块，使用缩进来确保它不会破坏列表：</p>
 <pre class=" language-markdown"><code class="prism  language-markdown"><span class="token list punctuation">*</span>   Bullet.
 
 <span class="token code keyword" spellcheck="false">    ```c++</span>
@@ -233,49 +221,40 @@ the list:</p>
 
 <span class="token list punctuation">*</span>   Next bullet.
 </code></pre>
-<p>You can also create a nested code block with 4 spaces. Simply indent 4<br>
-additional spaces from the list indentation:</p>
+<p>你也可以用4个空格来创建内嵌代码块，只需要从列表缩进处额外加4个空格：</p>
 <pre class=" language-markdown"><code class="prism  language-markdown"><span class="token list punctuation">*</span>   Bullet.
 
 <span class="token code keyword" spellcheck="false">        int foo;</span>
 
 <span class="token list punctuation">*</span>   Next bullet.
 </code></pre>
-<h2 id="links">Links</h2>
-<p>Long links make source Markdown difficult to read and break the 80 character<br>
-wrapping. <strong>Wherever possible, shorten your links</strong>.</p>
-<h3 id="use-informative-markdown-link-titles">Use informative Markdown link titles</h3>
-<p>Markdown link syntax allows you to set a link title, just as HTML does. Use it<br>
-wisely.</p>
-<p>Titling your links as “link” or “here” tells the reader precisely nothing when<br>
-quickly scanning your doc and is a waste of space:</p>
-<pre class=" language-markdown"><code class="prism  language-markdown">See the syntax guide for more info: [link](syntax<span class="token italic"><span class="token punctuation">_</span>guide.md).
-Or, check out the style guide [here](style<span class="token punctuation">_</span></span>guide.md).
-DO NOT DO THIS.
+<h2 id="链接">链接</h2>
+<p>长链接使Markdown难以阅读源码并在达到80个字符时会换行。<strong>尽可能缩短您的链接</strong>。</p>
+<h3 id="使用具有提示性的链接标题">使用具有提示性的链接标题</h3>
+<p>Markdown链接语法允许你像HTML一样设置链接，但你要正确地使用它。</p>
+<p>当读者快速浏览像"link"或"here"这样的链接标题时，他们完全得不到任何信息，这只是一种对空间的浪费。</p>
+<pre class=" language-markdown"><code class="prism  language-markdown">有关更多信息，请参阅语法只能: [link](syntax<span class="token italic"><span class="token punctuation">_</span>guide.md)。
+或者，查找这里的风格指南 [here](style<span class="token punctuation">_</span></span>guide.md)。
+可是并不建议你这样做。
 </code></pre>
-<p>Instead, write the sentence naturally, then go back and wrap the most<br>
-appropriate phrase with the link:</p>
-<pre class=" language-markdown"><code class="prism  language-markdown">See the [syntax guide](syntax<span class="token italic"><span class="token punctuation">_</span>guide.md) for more info.
-Or, check out the [style guide](style<span class="token punctuation">_</span></span>guide.md).
+<p>正确的做法应该是：先按文章的意思写好句子，再回过头找出最合适的短语，把它标记成链接。</p>
+<pre class=" language-markdown"><code class="prism  language-markdown">有关更多信息，请参见 [语法指南](syntax<span class="token italic"><span class="token punctuation">_</span>guide.md) 。
+或者，查看 [风格指南](style<span class="token punctuation">_</span></span>guide.md).
 </code></pre>
-<h2 id="images">Images</h2>
-<p>Use images sparingly, and prefer simple screenshots. This guide is designed<br>
-around the idea that plain text gets users down to the business of communication<br>
-faster with less reader distraction and author procrastination. However, it’s<br>
-sometimes very helpful to show what you mean.</p>
-<p>See <a href="https://gerrit.googlesource.com/gitiles/+/master/Documentation/markdown.md#Images">image syntax</a>.</p>
-<h2 id="prefer-lists-to-tables">Prefer lists to tables</h2>
-<p>Any tables in your Markdown should be small. Complex, large tables are difficult<br>
-to read in source and most importantly, <strong>a pain to modify later</strong>.</p>
+<h2 id="图像">图像</h2>
+<p>尽可能少用图像，多使用简单的截图。这一建议的意思是纯文本能够让用户更快了解到信息的内容，而减少分心和来自作者的拖延。<br>
+尽管如此，有时候图片对于表明你的意思还是很有帮助的。</p>
+<p>查阅 <a href="https://gerrit.googlesource.com/gitiles/+/master/Documentation/markdown.md#Images">image syntax</a>了结更多。</p>
+<h2 id="相比表格优先选择列表">相比表格优先选择列表</h2>
+<p>Markdown中的任何表格都应该很小。复杂的大型表格很难在源代码中阅读，最重要的是<strong>表格修改更痛苦</strong>。</p>
 <pre class=" language-markdown"><code class="prism  language-markdown"><span class="token title important">Fruit | Attribute | Notes
 <span class="token punctuation">---</span></span> | --- | --- | ---
 Apple | <span class="token url">[Juicy](https://example.com/SomeReallyReallyReallyReallyReallyReallyReallyReallyLongQuery)</span>, Firm, Sweet | Apples keep doctors away.
 Banana | <span class="token url">[Convenient](https://example.com/SomeDifferentReallyReallyReallyReallyReallyReallyReallyReallyLongQuery)</span>, Soft, Sweet | Contrary to popular belief, most apes prefer mangoes.
 
-DO NOT DO THIS
+不建议这样使用。
 </code></pre>
-<p><a href="#lists">Lists</a> and subheadings usually suffice to present the same information<br>
-in a slightly less compact, though much more edit-friendly way:</p>
+<p><a href="https://github.com/google/styleguide/blob/gh-pages/docguide/style.md#lists">列表</a>和子标题通常足够你用来呈现相同的信息，不那么紧凑，却要容易编辑得多：</p>
 <pre class=" language-markdown"><code class="prism  language-markdown"><span class="token title important"><span class="token punctuation">##</span> Fruits</span>
 
 <span class="token title important"><span class="token punctuation">###</span> Apple</span>
@@ -294,21 +273,20 @@ Apples keep doctors away.
 
 Contrary to popular belief, most apes prefer mangoes.
 </code></pre>
-<p>However, there are times when a small table is called for:</p>
+<p>但是，有时候小型表格还是很有用的。</p>
 <pre class=" language-markdown"><code class="prism  language-markdown"><span class="token title important">Transport | Favored by | Advantages
 <span class="token punctuation">---</span></span> | --- | ---
 Swallow | Coconuts | Otherwise unladen
 Bicycle | Miss Gulch | Weatherproof
 X-34 landspeeder | Whiny farmboys | Cheap since the X-38 came out
 </code></pre>
-<h2 id="strongly-prefer-markdown-to-html">Strongly prefer Markdown to HTML</h2>
-<p>Please prefer standard Markdown syntax wherever possible and avoid HTML hacks.<br>
-If you can’t seem to accomplish what you want, reconsider whether you really<br>
-need it. Except for <a href="#prefer-lists-to-tables">big tables</a>, Markdown meets almost<br>
-all needs already.</p>
-<p>Every bit of HTML or Javascript hacking reduces the readability and portability.<br>
-This in turn limits the usefulness of integrations with<br>
-other tools, which may either present the source as plain text or render it. See<br>
-<a href="philosophy.md">Philosophy</a>.</p>
-<p>Gitiles does not render HTML.</p>
+<h2 id="相比html优先使用markdown语法">相比HTML优先使用Markdown语法</h2>
+<p>尽可能使用标准Markdown语法，避免嵌入使用HTML。如果你无法实现你想要的效果，再好好考虑一下你是否真的需要它。因为除了大型表格，Markdown几乎已经可以满足任何需求。</p>
+<p>任何HTML或Javascript的潜入都会降低可读性和可移植性。这反过来又限制了与其他工具集成的实用性，这些工具可能会将源文件呈现为纯文本。见 <a href="https://github.com/google/styleguide/blob/gh-pages/docguide/philosophy.md">哲学</a>。</p>
+<p>Gitiles不会呈现HTML。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://github.com/google/styleguide/blob/gh-pages/docguide/style.md">https://github.com/google/styleguide/blob/gh-pages/docguide/style.md</a></li>
+<li><a href="https://www.jianshu.com/p/3beac9fd6496">https://www.jianshu.com/p/3beac9fd6496</a></li>
+</ul>
 
