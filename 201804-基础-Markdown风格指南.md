@@ -70,7 +70,7 @@
 <p><code>作者</code>: <em>可选项</em>. 如果你想要说明对文档的所有权或者它是你的得意之作，就把你自己放到标题下吧，虽然版本修订记录通常就足够说明这一点了。</p>
 </li>
 <li>
-<p><code>简短的介绍</code> 1~3句能够概括整个主题的话。想象你自己是一个完全的新手，刚刚接触你写的《Extending Foo》，并且需要知道你认为理所当然的最基本的假设。什么是Foo？我为什么要扩展它？。</p>
+<p><code>简短的介绍</code>:1~3句能够概括整个主题的话。想象你自己是一个完全的新手，刚刚接触你写的《Extending Foo》，并且需要知道你认为理所当然的最基本的假设。什么是Foo？我为什么要扩展它？</p>
 </li>
 <li>
 <p><code>[TOC]</code>: 如果您使用支持目录的主机，例如Gitiles，请<code>[TOC]</code>在简短介绍之后加以说明。请参阅<br>
@@ -98,7 +98,7 @@ for details.
 </code></pre>
 <h2 id="尾随空白">尾随空白</h2>
 <p>不要使用尾随空格，用尾随的反斜杠代替。</p>
-<p>虽然 <a href="https://link.jianshu.com?t=http://spec.commonmark.org/0.20/#hard-line-breaks">CommonMark spec</a> 判定一行末尾的两个空格等同于插入一个<code>&lt;br/&gt;</code>标签，但很多文件系统会有提交前的尾部空格检查，很多IDE也会把尾部空格清理掉。</p>
+<p>虽然 <a href="http://spec.commonmark.org/0.20/#hard-line-breaks">CommonMark spec</a> 判定一行末尾的两个空格等同于插入一个<code>&lt;br/&gt;</code>标签，但很多文件系统会有提交前的尾部空格检查，很多IDE也会把尾部空格清理掉。</p>
 <p>最好的方法是完全避免使用<code>&lt;br/&gt;</code>的需要，习惯用新行表示段落。</p>
 <h2 id="标题">标题</h2>
 <h3 id="atx风格标题">ATX风格标题</h3>
@@ -110,16 +110,17 @@ for details.
 </code></pre>
 <h3 id="标题中的间隔">标题中的间隔</h3>
 <p>请在<code>#</code>后加空格，并和上下文保持间隔：</p>
-<pre class=" language-markdown"><code class="prism  language-markdown">...text before.
+<pre class=" language-markdown"><code class="prism  language-markdown">...text before。
 
 <span class="token title important"><span class="token punctuation">#</span> Heading 1</span>
 
 Text after...
 </code></pre>
 <p>缺少间隔会让源码阅读起来有点困难：</p>
-<pre class=" language-markdown"><code class="prism  language-markdown">...text before.
+<pre class=" language-markdown"><code class="prism  language-markdown">...text before。
 
 <span class="token title important"><span class="token punctuation">#</span>Heading 1</span>
+
 Text after... DO NOT DO THIS.
 </code></pre>
 <h2 id="列表">列表</h2>
