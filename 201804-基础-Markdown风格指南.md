@@ -96,7 +96,7 @@ hendrerit, id nobis saperet fuisset ius.
 <span class="token url">[foo docs](https://gerrit.googlesource.com/gitiles/+/master/Documentation/markdown.md)</span>
 for details.
 </code></pre>
-<h2 id="尾随空白">尾随空白</h2>
+<h2 id="尾随空格">尾随空格</h2>
 <p>不要使用尾随空格，用尾随的反斜杠代替。</p>
 <p>虽然 <a href="http://spec.commonmark.org/0.20/#hard-line-breaks">CommonMark spec</a> 判定一行末尾的两个空格等同于插入一个<code>&lt;br/&gt;</code>标签，但很多文件系统会有提交前的尾部空格检查，很多IDE也会把尾部空格清理掉。</p>
 <p>最好的方法是完全避免使用<code>&lt;br/&gt;</code>的需要，习惯用新行表示段落。</p>
